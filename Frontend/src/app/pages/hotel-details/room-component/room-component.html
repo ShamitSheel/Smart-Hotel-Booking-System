@@ -1,0 +1,55 @@
+<div class="card room-card shadow-sm">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img [src]="room.images || room.images[0]" class="room-image" alt="{{ room.name }}" (error)="imageError($event)">
+    </div>
+
+    <div class="col-md-5">
+      <div class="card-body d-flex flex-column h-100">
+        <div class="card-content-fixed-height">
+          <h5 class="card-title fw-bold">{{ room.name }}</h5>
+          <p class="card-text text-muted">{{ room.description }}</p>
+
+          <div class="room-amenities-list">
+            <ul class="list-unstyled">
+              <li><i class="bi bi-people-fill me-2 text-primary"></i>Sleeps {{ room.maxGuests }}</li>
+              <li><i class="bi bi-moon-fill"></i> {{ room.bedType }} bed(s)</li>
+              
+            </ul>
+
+            <ul class="list-unstyled mt-3">
+              <li *ngIf="room.amenities.includes('Free WiFi')"><i class="bi bi-wifi me-2 text-success"></i>Free WiFi</li>
+              <li *ngIf="room.amenities.includes('AC')"><i class="bi bi-fan me-2 text-info"></i>AC</li>
+              <li *ngIf="room.amenities.includes('Breakfast buffet')"><i class="bi bi-egg-fried me-2 text-warning"></i>Breakfast buffet</li>
+              <li *ngIf="room.amenities.includes('TV')"><i class="bi bi-tv me-2 text-secondary"></i>TV</li>
+              <li *ngIf="room.amenities.includes('Minibar')"><i class="bi bi-glass-fill me-2 text-danger"></i>Minibar</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 d-flex flex-column justify-content-center align-items-center p-3 border-start">
+      <div class="text-center">
+        <div class="price-display">
+          <p class="original-price text-decoration-line-through text-muted" *ngIf="room.originalPrice && room.originalPrice !== room.discountedPrice">
+            ₹{{ room.originalPrice | number:'1.0-0' }}
+          </p>
+          <h4 class="current-price fw-bold">₹{{ room.discountedPrice | number:'1.0-0' }}</h4>
+          <p class="total-price text-secondary">
+            <small>₹{{ room.totalPriceIncludesTaxes | number:'1.0-0' }} total</small>
+          </p>
+          <p class="taxes-fees text-muted"><small>includes taxes & fees</small></p>
+        </div>
+      </div>
+      <button class="btn btn-primary w-100 mt-2" (click)="reserveRoom()" [disabled]="!room.isAvailable">Reserve Now</button>
+
+      <ng-container *ngIf="!room.isAvailable">
+        <p class="text-danger fw-bold mt-2"><small>Currently not available</small></p>
+      </ng-container>
+      <ng-container *ngIf="room.isAvailable && room.quantityAvailable <= 5">
+        <p class="text-warning fw-bold mt-2"><small>Only {{ room.quantityAvailable }} left</small></p>
+      </ng-container>
+    </div>
+  </div>
+</div>

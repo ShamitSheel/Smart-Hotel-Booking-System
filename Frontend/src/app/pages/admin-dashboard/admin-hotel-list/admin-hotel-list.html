@@ -1,0 +1,41 @@
+<div class="hotel-list-container">
+  <header>
+    <h1><i class="bi bi-building"></i> Hotel List</h1>
+    <button class="btn-primary" [routerLink]="['/admin/add']">
+      <i class="bi bi-plus-circle-fill"></i> Add New Hotel
+    </button>
+  </header>
+
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Loading hotels...</p>
+  </div>
+
+  <div class="hotel-list" *ngIf="(hotels$ | async) as hotels">
+    <div class="no-hotels" *ngIf="hotels.length === 0 && !isLoading">
+      <p>No hotels found. Click 'Add New Hotel' to get started.</p>
+    </div>
+
+    <div class="hotel-card" *ngFor="let hotel of hotels">
+      <img [src]="hotel.images.length > 0 ? hotel.images[0] : 'assets/placeholder-image.png'" alt="{{ hotel.name }}" class="hotel-image">
+      <div class="hotel-details">
+        <h3>{{ hotel.name }}</h3>
+        <p class="type-rating">
+          {{ hotel.type }} - {{ hotel.rating | number:'1.1-1' }}
+          <i class="bi bi-star-fill"></i>
+        </p>
+        <p class="address">{{ hotel.address.street }}, {{ hotel.address.city }}</p>
+        <div class="hotel-actions">
+          <button class="btn-secondary" (click)="onViewDetails(hotel.id)">View Details</button>
+          <button class="btn-danger" (click)="onDeleteHotel(hotel.id)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-confirmation-modal 
+  *ngIf="showConfirmationModal" 
+  [promptText]="deleteWarningText" 
+  (confirmed)="onConfirmDeletion($event)">
+</app-confirmation-modal>

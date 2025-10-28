@@ -1,0 +1,68 @@
+<div class="view-section">
+  <div class="header">
+    <h4><i class="bi bi-geo-alt-fill"></i> Location & Contact</h4>
+    <button type="button" class="btn-edit" (click)="onEdit()" *ngIf="!isEditing">Edit</button>
+  </div>
+  
+  <div class="content" *ngIf="!isEditing">
+    <h5>Address</h5>
+    <p>
+      {{ initialData.address.street }}, {{ initialData.address.city }},<br>
+      {{ initialData.address.state }}, {{ initialData.address.zipCode }}, {{ initialData.address.country }}
+    </p>
+
+    <h5>Contact</h5>
+    <p><strong>Phone:</strong> {{ initialData.contact.phone }}</p>
+    <p><strong>Email:</strong> {{ initialData.contact.email }}</p>
+    <p *ngIf="initialData.contact.website"><strong>Website:</strong> <a [href]="initialData.contact.website" target="_blank">{{ initialData.contact.website }}</a></p>
+  </div>
+  
+  <div class="edit-form" *ngIf="isEditing">
+    <form [formGroup]="locationContactForm" (ngSubmit)="onSave()">
+      <h5>Address</h5>
+      <div formGroupName="address">
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input type="text" id="street" formControlName="street">
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input type="text" id="city" formControlName="city">
+        </div>
+        <div class="form-group">
+          <label for="state">State</label>
+          <input type="text" id="state" formControlName="state">
+        </div>
+        <div class="form-group">
+          <label for="zipCode">ZIP Code</label>
+          <input type="text" id="zipCode" formControlName="zipCode">
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input type="text" id="country" formControlName="country">
+        </div>
+      </div>
+
+      <h5>Contact</h5>
+      <div formGroupName="contact">
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="text" id="phone" formControlName="phone">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email">
+        </div>
+        <div class="form-group">
+          <label for="website">Website</label>
+          <input type="text" id="website" formControlName="website">
+        </div>
+      </div>
+      
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn-save" [disabled]="locationContactForm.invalid">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

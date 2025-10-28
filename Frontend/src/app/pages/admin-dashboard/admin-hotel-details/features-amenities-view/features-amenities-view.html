@@ -1,0 +1,63 @@
+<div class="view-section">
+  <div class="header">
+    <h4><i class="bi bi-list-check"></i> Features & Amenities</h4>
+    <button type="button" class="btn-edit" (click)="onEdit()" *ngIf="!isEditing">Edit</button>
+  </div>
+  
+  <div class="content" *ngIf="!isEditing">
+    <div class="features-list">
+      <h5>Features</h5>
+      <ul *ngIf="features.length > 0; else noFeatures">
+        <li *ngFor="let feature of features">{{ feature }}</li>
+      </ul>
+      <ng-template #noFeatures><p class="empty-list">No features added yet.</p></ng-template>
+    </div>
+    
+    <div class="amenities-list">
+      <h5>Amenities</h5>
+      <ul *ngIf="amenities.length > 0; else noAmenities">
+        <li *ngFor="let amenity of amenities">{{ amenity }}</li>
+      </ul>
+      <ng-template #noAmenities><p class="empty-list">No amenities added yet.</p></ng-template>
+    </div>
+  </div>
+  
+  <div class="edit-form" *ngIf="isEditing">
+    <div class="list-editor">
+      <h5>Features</h5>
+      <div class="input-group">
+        <input type="text" [(ngModel)]="newFeature" placeholder="Add a new feature" (keyup.enter)="addFeature()">
+        <button type="button" class="btn-add" (click)="addFeature()">Add</button>
+      </div>
+      <ul class="editable-list">
+        <li *ngFor="let feature of features; let i = index">
+          <span>{{ feature }}</span>
+          <button type="button" class="btn-delete" (click)="deleteFeature(i)">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <div class="list-editor">
+      <h5>Amenities</h5>
+      <div class="input-group">
+        <input type="text" [(ngModel)]="newAmenity" placeholder="Add a new amenity" (keyup.enter)="addAmenity()">
+        <button type="button" class="btn-add" (click)="addAmenity()">Add</button>
+      </div>
+      <ul class="editable-list">
+        <li *ngFor="let amenity of amenities; let i = index">
+          <span>{{ amenity }}</span>
+          <button type="button" class="btn-delete" (click)="deleteAmenity(i)">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+      <button type="button" class="btn-save" (click)="onSave()">Save</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+/* hotel-details.component.css */
+
+.container {
+  max-width: 1200px;
+}
+
+/* Image Carousel Styling */
+.hotel-carousel-image {
+  height: 450px; /* Increased height for better visual impact */
+  object-fit: cover;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  padding: 1rem;
+}
+
+.card {
+  border: none;
+}
+
+.card-title {
+  font-size: 2.5rem;
+}
+
+.badge {
+  font-size: 1.1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 5px;
+}
+
+h1, h2 {
+  font-weight: 700;
+}
+
+p.text-muted {
+  font-size: 1.1rem;
+}
+
+/* Feature and Amenity Lists */
+.hotel-features li, .hotel-amenities li {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.hotel-features li i, .hotel-amenities li i {
+  font-size: 1.3rem;
+  color: var(--bs-success);
+}
+
+/* Policies Section */
+.policy-item {
+  background-color: var(--bs-light);
+  border: 1px solid var(--bs-border-color);
+  transition: all 0.2s ease-in-out;
+}
+
+.policy-item:hover {
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.policy-item h6 {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.policy-item p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.policy-item i {
+  color: var(--bs-primary);
+  font-size: 1.2rem;
+}
+
+/* Icon colors */
+.text-primary { color: #0d6efd !important; }
+.text-success { color: #198754 !important; }
+.text-danger { color: #dc3545 !important; }
+.text-warning { color: #ffc107 !important; }
+.text-info { color: #0dcaf0 !important; }
+.text-secondary { color: #6c757d !important; }
+
+/* Loading State */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+.review-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.review-rating .bi-star-fill {
+  color: #e0e0e0;
+}
+
+.review-rating .bi-star-fill.active {
+  color: #ffc107;
+}

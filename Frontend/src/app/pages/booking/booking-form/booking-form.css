@@ -1,0 +1,42 @@
+/* src/app/pages/booking/booking-form.component.css */
+.card-header {
+  border-radius: 15px 15px 0 0 !important;
+}
+
+.card {
+  border-radius: 15px;
+}
+
+.summary-box {
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+}
+
+.form-control, .btn {
+  border-radius: 8px;
+}
+
+.btn-lg {
+  padding: 12px 24px;
+  font-size: 1.25rem;
+}
+
+.payment-options {
+  border-left: 3px solid #007bff;
+  padding-left: 1rem;
+}
+
+.alert {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-outline-primary {
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+  background-color: #007bff;
+  color: #fff;
+}

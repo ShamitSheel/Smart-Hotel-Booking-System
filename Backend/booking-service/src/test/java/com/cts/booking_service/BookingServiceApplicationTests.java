@@ -1,0 +1,19 @@
+package com.cts.booking_service;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
+@SpringBootTest
+@ActiveProfiles("test")
+class BookingServiceApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+	@Test
+	void applicationStartsSuccessfully() {
+		// This test ensures the Spring context loads without errors
+	}
+}

@@ -1,0 +1,97 @@
+<div class="bookings-container">
+  <header>
+    <h1><i class="bi bi-calendar-check-fill"></i> Hotel Bookings</h1>
+    <p>Overview of all bookings for your managed hotels.</p>
+  </header>
+
+  <div class="filter-buttons">
+    <button [class.active]="currentFilter === 'all'" (click)="applyFilter('all')">All Bookings</button>
+    <button [class.active]="currentFilter === 'current'" (click)="applyFilter('current')">Current Stays</button>
+    <button [class.active]="currentFilter === 'upcoming'" (click)="applyFilter('upcoming')">Upcoming Stays</button>
+    <button [class.active]="currentFilter === 'previous'" (click)="applyFilter('previous')">Previous Stays</button>
+    <button [class.active]="currentFilter === 'bookedToday'" (click)="applyFilter('bookedToday')">Booked Today</button>
+    <button [class.active]="currentFilter === 'bookedThisWeek'" (click)="applyFilter('bookedThisWeek')">Booked This Week</button>
+    <button [class.active]="currentFilter === 'bookedThisMonth'" (click)="applyFilter('bookedThisMonth')">Booked This Month</button>
+  </div>
+
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Loading bookings...</p>
+  </div>
+
+  <div class="booking-list" *ngIf="(filteredBookings$ | async) as bookings">
+    <div class="no-bookings" *ngIf="bookings.length === 0 && !isLoading">
+      <p>No bookings found for the selected filter.</p>
+    </div>
+
+    <div class="booking-card" *ngFor="let booking of bookings">
+      <div class="card-header">
+        <h3>Booking ID: {{ booking.id }}</h3>
+        <span [class]="'status-' + booking.status">{{ booking.status | titlecase }}</span>
+      </div>
+      <div class="card-body">
+        <div class="booking-detail">
+          <strong>Hotel:</strong> <span>{{ booking.hotelName }}</span>
+          <button class="btn btn-sm btn-outline-info ms-2" (click)="openReviews(booking.hotelId, booking.hotelName)">View Reviews</button>
+        </div>
+        <div class="booking-detail">
+          <strong>Room:</strong> <span>{{ booking.roomName }} ({{ booking.numberOfRooms }} room<span *ngIf="booking.numberOfRooms > 1">s</span>)</span>
+        </div>
+        <div class="booking-detail">
+          <strong>Customer:</strong> <span>{{ booking.customerName }}</span>
+        </div>
+        <div class="booking-detail">
+          <strong>Email:</strong> <span>{{ booking.guestDetails.email }}</span>
+        </div>
+        <div class="booking-detail">
+          <strong>Phone:</strong> <span>{{ booking.guestDetails.phone }}</span>
+        </div>
+        <div class="booking-detail">
+          <strong>Booked On:</strong> <span>{{ booking.bookingDate | date:'mediumDate' }}</span>
+        </div>
+        <div class="booking-detail">
+          <strong>Check-in:</strong> <span>{{ booking.checkInDate | date:'mediumDate' }}</span>
+        </div>
+        <div class="booking-detail">
+          <strong>Check-out:</strong> <span>{{ booking.checkOutDate | date:'mediumDate' }}</span>
+        </div>
+        <div class="booking-detail">
+          <strong>Total Amount:</strong> <span>{{ booking.finalAmount | currency:"INR" }}</span>
+        </div>
+        <div class="booking-detail">
+          <strong>Payment:</strong> <span>{{ booking.paymentMethod | titlecase }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="review-modal" *ngIf="showReviewModal">
+  <div class="review-modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Reviews for {{ selectedHotelName }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeReviews()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="selectedHotelReviews.length === 0">
+        <p>No reviews yet for this hotel.</p>
+      </div>
+      <div *ngFor="let review of selectedHotelReviews" class="review-item">
+        <div class="review-header">
+          <div class="review-rating">
+            <span *ngFor="let star of [1, 2, 3, 4, 5]" class="bi bi-star-fill" [class.active]="review.rating >= star"></span>
+            ({{ review.rating }}/5)
+          </div>
+          <div class="reviewer-info">
+            <strong>{{ review.reviewerName || 'Anonymous' }}</strong>
+          </div>
+        </div>
+        <p class="review-comment">{{ review.comment }}</p>
+        <small class="review-timestamp text-muted">Reviewed on {{ review.timestamp | date:'mediumDate' }}</small>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeReviews()">Close</button>
+    </div>
+  </div>
+</div>

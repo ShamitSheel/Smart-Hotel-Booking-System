@@ -1,0 +1,73 @@
+<form [formGroup]="policiesForm" (ngSubmit)="onSubmit()" class="form-container">
+  <h3>5. Policies</h3>
+  
+  <div class="form-section">
+    <div class="grid-2-cols">
+      <div class="form-field">
+        <label for="checkInTime">Check-in Time</label>
+        <input id="checkInTime" type="time" formControlName="checkInTime">
+        <div *ngIf="policiesForm.get('checkInTime')?.invalid && policiesForm.get('checkInTime')?.touched" class="error-message">
+          Check-in time is required.
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="checkOutTime">Check-out Time</label>
+        <input id="checkOutTime" type="time" formControlName="checkOutTime">
+        <div *ngIf="policiesForm.get('checkOutTime')?.invalid && policiesForm.get('checkOutTime')?.touched" class="error-message">
+          Check-out time is required.
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-section">
+    <div class="form-field">
+      <label for="cancellationPolicy">Cancellation Policy</label>
+      <textarea id="cancellationPolicy" formControlName="cancellationPolicy" rows="4"></textarea>
+      <div *ngIf="policiesForm.get('cancellationPolicy')?.invalid && policiesForm.get('cancellationPolicy')?.touched" class="error-message">
+        Cancellation policy is required.
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-section">
+    <h4><i class="bi bi-gear-fill"></i> Other Policies</h4>
+    <div class="checkbox-list">
+      <label class="checkbox-item">
+        <input type="checkbox" formControlName="smokingAllowed">
+        Smoking Allowed
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" formControlName="petsAllowed">
+        Pets Allowed
+      </label>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h4><i class="bi bi-credit-card-2-front-fill"></i> Booking Options</h4>
+    <div class="checkbox-list">
+      <label class="checkbox-item">
+        <input type="checkbox" formControlName="isFullyRefundable">
+        Fully Refundable
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" formControlName="hasFreeBreakfast">
+        Free Breakfast Included
+      </label>
+      <label class="checkbox-item">
+        <input type="checkbox" formControlName="reserveNowPayLater">
+        Reserve now, pay later
+      </label>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="button" class="btn-secondary" (click)="onGoBack()">
+      <i class="bi bi-arrow-left"></i> Back
+    </button>
+    <button type="submit" class="btn-primary" [disabled]="policiesForm.invalid">
+      Next <i class="bi bi-arrow-right"></i>
+    </button>
+  </div>
+</form>

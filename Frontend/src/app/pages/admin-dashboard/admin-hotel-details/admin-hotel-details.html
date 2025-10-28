@@ -1,0 +1,39 @@
+<div class="hotel-details-container" *ngIf="hotel$ | async as hotel">
+  <header>
+    <h1>{{ hotel.name }}</h1>
+    <p class="hotel-id">Hotel ID: {{ hotel.id }}</p>
+  </header>
+
+  <section class="details-section">
+    <app-basic-info-view
+      [initialData]="hotel"
+      (dataUpdated)="onBasicInfoUpdated($event)">
+    </app-basic-info-view>
+
+    <app-location-contact-view
+      [initialData]="hotel"
+      (dataUpdated)="onLocationContactUpdated($event)">
+    </app-location-contact-view>
+
+    <app-photos-media-view
+      [initialData]="hotel"
+      (dataUpdated)="onPhotosMediaUpdated($event)">
+    </app-photos-media-view>
+
+    <app-features-amenities-view
+      [initialData]="hotel"
+      (dataUpdated)="onFeaturesAmenitiesUpdated($event)">
+    </app-features-amenities-view>
+
+    <app-hotel-policies-view
+      [initialData]="hotel"
+      (dataUpdated)="onPoliciesUpdated($event)">
+    </app-hotel-policies-view>
+
+    <app-rooms-view
+      [initialData]="hotel"
+      (dataUpdated)="onRoomsUpdated($event)">
+    </app-rooms-view>
+  </section>
+
+  </div>

@@ -1,0 +1,121 @@
+<form [formGroup]="roomForm" (ngSubmit)="onSubmit()" class="form-container">
+  <h3>{{ roomToEdit ? 'Edit Room' : 'Add New Room' }}</h3>
+
+  <div class="form-section">
+    <h4><i class="bi bi-info-circle-fill"></i> Room Information</h4>
+    <div class="form-field">
+      <label for="name">Room Name</label>
+      <input id="name" type="text" formControlName="name" placeholder="e.g., Deluxe King Room">
+      <div *ngIf="roomForm.get('name')?.invalid && roomForm.get('name')?.touched" class="error-message">
+        Room name is required.
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" rows="3"
+        placeholder="Describe the room's features and amenities."></textarea>
+      <div *ngIf="roomForm.get('description')?.invalid && roomForm.get('description')?.touched" class="error-message">
+        Description is required.
+      </div>
+    </div>
+    <div class="grid-2-cols">
+      <div class="form-field">
+        <label for="maxGuests">Max Guests</label>
+        <input id="maxGuests" type="number" formControlName="maxGuests" min="1">
+        <div *ngIf="roomForm.get('maxGuests')?.invalid && roomForm.get('maxGuests')?.touched" class="error-message">
+          Max guests is required (min 1).
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="bedType">Bed Type</label>
+        <input id="bedType" type="text" formControlName="bedType" placeholder="e.g., King, Twin, Queen">
+        <div *ngIf="roomForm.get('bedType')?.invalid && roomForm.get('bedType')?.touched" class="error-message">
+          Bed type is required.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h4><i class="bi bi-currency-rupee"></i> Pricing & Availability</h4>
+    <div class="grid-2-cols">
+      <div class="form-field">
+        <label for="originalPrice">Original Price (₹)</label>
+        <input id="originalPrice" type="number" formControlName="originalPrice" min="0">
+        <div *ngIf="roomForm.get('originalPrice')?.invalid && roomForm.get('originalPrice')?.touched"
+          class="error-message">
+          Original price is required.
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="discountedPrice">Discounted Price (₹)</label>
+        <input id="discountedPrice" type="number" formControlName="discountedPrice" min="0">
+      </div>
+    </div>
+
+    <div class="grid-2-cols">
+      <div class="form-field">
+        <label for="discountPercentage">Discount (%)</label>
+        <input id="discountPercentage" type="text" formControlName="discountPercentage" readonly>
+      </div>
+      <div class="form-field">
+        <label for="totalPriceIncludesTaxes">Total Price (incl. Taxes)</label>
+        <input id="totalPriceIncludesTaxes" type="text" formControlName="totalPriceIncludesTaxes" readonly>
+      </div>
+    </div>
+
+    <div class="grid-2-cols">
+      <div class="form-field">
+        <label for="quantityAvailable">Quantity Available</label>
+        <input id="quantityAvailable" type="number" formControlName="quantityAvailable" min="1">
+        <div *ngIf="roomForm.get('quantityAvailable')?.invalid && roomForm.get('quantityAvailable')?.touched"
+          class="error-message">
+          Quantity is required (min 1).
+        </div>
+      </div>
+      <div class="form-field checkbox-item">
+        <label for="isAvailable">Is Available?</label>
+        <input id="isAvailable" type="checkbox" formControlName="isAvailable">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h4><i class="bi bi-list-check"></i> Amenities</h4>
+    <div class="checkbox-list" formArrayName="amenities">
+      <label *ngFor="let amenity of availableAmenities; let i = index" class="checkbox-item">
+        <input type="checkbox" [formControlName]="i">
+        {{ amenity }}
+      </label>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h4><i class="bi bi-images"></i> Room Photos</h4>
+    <div class="image-upload-area">
+      <div class="image-preview" *ngIf="roomForm.get('images')?.value.length > 0">
+        <div *ngFor="let image of roomForm.get('images')?.value" class="preview-item">
+          <img [src]="image" alt="Room Image">
+          <button type="button" class="btn-remove-image" (click)="onRemoveImage(image)">
+            <i class="bi bi-x-circle-fill"></i>
+          </button>
+        </div>
+      </div>
+      <div class="file-input-container">
+        <label for="file-upload" class="custom-file-upload">
+          <i class="bi bi-cloud-arrow-up"></i> Upload Images
+        </label>
+        <input id="file-upload" type="file" multiple (change)="onFileSelected($event)">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="button" class="btn-secondary" (click)="onCancel()">
+      Cancel
+    </button>
+    <button type="submit" class="btn-primary" [disabled]="roomForm.invalid">
+      Save Room
+    </button>
+  </div>
+</form>

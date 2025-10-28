@@ -1,0 +1,223 @@
+/* Add a background to the body */
+body {
+    background-color: #f8f9fa; /* Light gray background */
+}
+
+/* Style the main card */
+.card {
+    border-radius: 1.5rem; /* More rounded corners */
+    overflow: hidden; /* Ensures child elements respect the border radius */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Stronger shadow for depth */
+}
+
+/* Style the card header */
+.card-header {
+    border-bottom: none;
+    font-weight: bold;
+}
+
+/* Style the form labels and inputs */
+.form-label {
+    font-weight: 600; /* Bolder labels */
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+/* Style the input groups for icons */
+.input-group-text {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-right: none;
+    color: #495057;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.input-group .form-control {
+    border-left: none;
+}
+
+/* Style the buttons */
+.btn-outline-primary, .btn-outline-secondary {
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background-color: #0d6efd;
+    color: white;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Style the badges */
+.badge {
+    border-radius: 50rem;
+}
+
+/* General improvements for readability */
+.gy-3 > * {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.mt-5 {
+    margin-top: 3rem !important;
+}
+
+.text-danger {
+    font-size: 0.875em;
+}
+
+/* --- Base and Variables --- */
+:root {
+    --primary-color: #007bff; /* A classic blue for primary actions */
+    --secondary-color: #6c757d; /* Standard gray for secondary actions */
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --gold-color: #ffc107; /* Used for loyalty points */
+    --card-bg: #ffffff;
+    --body-bg: #f4f7f6; /* Lighter, subtle background */
+}
+
+body {
+    background-color: var(--body-bg);
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; /* A more modern font stack */
+}
+
+/* --- Card Structure and Aesthetics --- */
+.card {
+    border-radius: 1.5rem; /* Large, soft corners */
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Softer, deeper shadow */
+    border: 1px solid rgba(0, 0, 0, 0.05); /* Very light border for definition */
+    background-color: var(--card-bg);
+}
+
+/* Style the card header */
+.card-header {
+    /* Updated gradient for a more sophisticated look */
+    background: linear-gradient(to right, var(--primary-color), #6f42c1);
+    border-bottom: none;
+    font-weight: 700; /* Bolder header text */
+    padding: 1.5rem 2rem; /* More padding */
+}
+
+.card-header h3 {
+    font-size: 1.75rem;
+}
+
+/* Style the badges */
+.badge {
+    border-radius: 50rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 0.4em 1em; /* Increased badge size */
+}
+
+/* --- Read-Only Data Display Enhancements --- */
+
+/* Creating a block-style for each profile item in read mode */
+.profile-item {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    background-color: #f8f9fa; /* Very light background for contrast */
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    display: flex; /* Flexbox for alignment */
+    align-items: center;
+}
+
+.profile-item:hover {
+    background-color: #e9f5ff; /* Subtle hover effect */
+    border-color: #cce5ff;
+}
+
+.profile-item strong {
+    font-weight: 600;
+    margin-right: 0.5rem;
+    color: #343a40;
+}
+
+/* Custom icon colors (using variables) */
+.text-primary { color: var(--primary-color) !important; }
+.text-success { color: var(--success-color) !important; }
+.text-warning { color: var(--warning-color) !important; }
+.text-danger { color: var(--danger-color) !important; }
+.text-info { color: var(--info-color) !important; }
+.text-gold { color: var(--gold-color) !important; }
+
+/* --- Form and Input Enhancements --- */
+.form-label {
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 0.3rem; /* Tighter spacing */
+}
+
+.input-group-text {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-right: none;
+    color: var(--primary-color); /* Primary color for icons */
+    padding: 0.5rem 0.75rem; /* Consistent padding */
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); /* Primary color focus ring */
+}
+
+/* --- Button Styling --- */
+.btn {
+    font-weight: 500;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+}
+
+/* Refined hover effects for outline buttons */
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    box-shadow: 0 4px 10px rgba(108, 117, 125, 0.3);
+}
+
+/* Style for save/update buttons */
+.btn-success, .btn-primary {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-success:hover, .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Utility and Spacing --- */
+.card-body {
+    padding: 2.5rem; /* More generous inner padding */
+}
+
+.gy-3 > * {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.text-danger {
+    font-size: 0.85em;
+    font-weight: 500;
+}

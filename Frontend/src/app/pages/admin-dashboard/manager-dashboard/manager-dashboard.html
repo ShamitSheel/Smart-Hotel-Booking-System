@@ -1,0 +1,94 @@
+<div class="dashboard-container">
+  <div class="loading-container" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+    <p>Loading dashboard...</p>
+  </div>
+
+  <div *ngIf="!isLoading && (dashboardData$ | async) as data">
+    <div class="dashboard-header">
+      <h1>Welcome, {{ userName }}!</h1>
+      <p>Here's a quick overview of your hotel operations.</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="icon-bg bg-blue"><i class="bi bi-calendar-check"></i></div>
+        <div class="stat-info">
+          <div class="stat-label">Total Bookings</div>
+          <div class="stat-value">{{ data.totalBookingsCount }}</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="icon-bg bg-green"><i class="bi bi-calendar-plus"></i></div>
+        <div class="stat-info">
+          <div class="stat-label">Upcoming Bookings</div>
+          <div class="stat-value">{{ data.upcomingBookingsCount }}</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="icon-bg bg-purple"><i class="bi bi-person-check-fill"></i></div>
+        <div class="stat-info">
+          <div class="stat-label">Today's Check-ins</div>
+          <div class="stat-value">{{ data.todayCheckInsCount }}</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="icon-bg bg-red"><i class="bi bi-person-dash-fill"></i></div>
+        <div class="stat-info">
+          <div class="stat-label">Today's Check-outs</div>
+          <div class="stat-value">{{ data.todayCheckOutsCount }}</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="icon-bg bg-orange"><i class="bi bi-cash-stack"></i></div>
+        <div class="stat-info">
+          <div class="stat-label">Total Revenue</div>
+          <div class="stat-value">{{ data.totalRevenue | currency:"INR" }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="recent-bookings-section">
+      <h2>Recent Bookings</h2>
+      <div *ngIf="data.recentBookings.length === 0" class="no-data">
+        <p>No recent bookings found.</p>
+      </div>
+      <div *ngIf="data.recentBookings.length > 0" class="booking-list">
+        <div class="booking-item" *ngFor="let booking of data.recentBookings">
+          <div class="booking-info">
+            <div class="customer-name">
+              <i class="bi bi-person-fill"></i> {{ booking.customerName }}
+            </div>
+            <div class="hotel-name">
+              <i class="bi bi-building"></i> {{ booking.hotelName }}
+            </div>
+          </div>
+          <div class="booking-dates">
+            <div class="date-info">
+              <i class="bi bi-calendar-range"></i>
+              {{ booking.checkInDate | date:'shortDate' }} - {{ booking.checkOutDate | date:'shortDate' }}
+            </div>
+            <div class="amount">
+              {{ booking.finalAmount | currency:"INR" }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-actions-section">
+      <h2>Quick Actions</h2>
+      <div class="action-buttons">
+        <button [routerLink]="['/admin/hotels']" class="btn-action">
+          <i class="bi bi-card-list"></i> Manage Hotels
+        </button>
+        <button [routerLink]="['/admin/bookings']" class="btn-action">
+          <i class="bi bi-calendar-week"></i> View All Bookings
+        </button>
+        <button [routerLink]="['/admin/add']" class="btn-action">
+          <i class="bi bi-plus-circle"></i> Add New Hotel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

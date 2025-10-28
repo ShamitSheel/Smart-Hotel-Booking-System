@@ -1,0 +1,144 @@
+<div class="container my-5">
+  <h1 class="fw-bold text-center mb-4 text-primary">My Bookings</h1>
+
+  <div *ngIf="isLoading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading bookings...</span>
+    </div>
+    <p class="mt-3">Loading your bookings...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger text-center" role="alert">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage">
+    <div class="d-flex justify-content-center mb-4">
+      <button
+        class="btn me-2"
+        [ngClass]="{'btn-primary': selectedTab === 'current', 'btn-outline-primary': selectedTab !== 'current'}"
+        (click)="selectTab('current')"
+      >
+        <i class="bi bi-calendar-check me-2"></i>Current Bookings
+      </button>
+      <button
+        class="btn"
+        [ngClass]="{'btn-secondary': selectedTab === 'previous', 'btn-outline-secondary': selectedTab !== 'previous'}"
+        (click)="selectTab('previous')"
+      >
+        <i class="bi bi-clock-history me-2"></i>Previous Bookings
+      </button>
+    </div>
+
+    <div *ngIf="selectedTab === 'current'">
+      <h3 class="fw-bold mb-3 text-success"><i class="bi bi-calendar-check me-2"></i>Upcoming & Active Bookings</h3>
+      <div *ngIf="currentBookings.length === 0" class="alert alert-info text-center" role="alert">
+        You have no upcoming or active bookings.
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4" *ngFor="let booking of currentBookings">
+          <div class="card h-100 shadow-sm rounded-3 booking-card">
+            <img [src]="booking.roomImage" class="card-img-top booking-card-img" alt="{{ booking.roomName }}">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="card-title fw-bold text-truncate">{{ booking.hotelName }}</h5>
+                <span [ngClass]="getStatusBadgeClass(booking.status)">{{ booking.status }}</span>
+              </div>
+              <p class="card-text text-muted mb-2">{{ booking.roomName }}</p>
+              <ul class="list-unstyled mb-3 small">
+                <li><i class="bi bi-calendar-event me-2 text-info"></i>Check-in: {{ booking.checkInDate | date:'mediumDate' }}</li>
+                <li><i class="bi bi-calendar-x me-2 text-danger"></i>Check-out: {{ booking.checkOutDate | date:'mediumDate' }}</li>
+                <li><i class="bi bi-door-open me-2 text-secondary"></i>Rooms: {{ booking.numberOfRooms }}</li>
+                <li><i class="bi bi-currency-rupee me-2 text-success"></i>Final Amount: ₹{{ booking.finalAmount | number:'1.0-0' }}</li>
+                <li><i class="bi bi-credit-card me-2 text-primary"></i>Payment: {{ getPaymentMethodDisplay(booking.paymentMethod) }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="selectedTab === 'previous'">
+      <h3 class="fw-bold mb-3 text-secondary"><i class="bi bi-clock-history me-2"></i>Past Bookings</h3>
+      <div *ngIf="previousBookings.length === 0" class="alert alert-secondary text-center" role="alert">
+        You have no past bookings.
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4" *ngFor="let booking of previousBookings">
+          <div class="card h-100 shadow-sm rounded-3 booking-card">
+            <img [src]="booking.roomImage" class="card-img-top booking-card-img" alt="{{ booking.roomName }}">
+            <div class="card-body d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <h5 class="card-title fw-bold text-truncate">{{ booking.hotelName }}</h5>
+                <span [ngClass]="getStatusBadgeClass(booking.status)">{{ booking.status }}</span>
+              </div>
+              <p class="card-text text-muted mb-2">{{ booking.roomName }}</p>
+              <ul class="list-unstyled mb-3 small">
+                <li><i class="bi bi-calendar-event me-2 text-info"></i>Check-in: {{ booking.checkInDate | date:'mediumDate' }}</li>
+                <li><i class="bi bi-calendar-x me-2 text-danger"></i>Check-out: {{ booking.checkOutDate | date:'mediumDate' }}</li>
+                <li><i class="bi bi-door-open me-2 text-secondary"></i>Rooms: {{ booking.numberOfRooms }}</li>
+                <li><i class="bi bi-currency-rupee me-2 text-success"></i>Final Amount: ₹{{ booking.finalAmount | number:'1.0-0' }}</li>
+                <li><i class="bi bi-credit-card me-2 text-primary"></i>Payment: {{ getPaymentMethodDisplay(booking.paymentMethod) }}</li>
+              </ul>
+              <div class="mt-auto">
+                <button 
+                  *ngIf="!booking.hasReviewed"
+                  class="btn btn-primary btn-sm w-100" 
+                  (click)="openReviewForm(booking)">
+                  Write a Review
+                </button>
+                <div *ngIf="booking.hasReviewed" class="text-success text-center">
+                  <i class="bi bi-check-circle-fill me-2"></i>Review Submitted
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="review-modal" *ngIf="showReviewForm">
+  <div class="review-modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Review {{ selectedBookingForReview?.hotelName }}</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeReviewForm()">&times;</button>
+    </div>
+    <form #reviewFormNg="ngForm" (ngSubmit)="submitReview(reviewFormNg)">
+      <div class="modal-body">
+        <div class="form-group mb-3">
+          <label for="rating">Rating *</label>
+          <div class="rating-stars">
+            <span *ngFor="let star of [1, 2, 3, 4, 5]" 
+                  class="bi bi-star-fill" 
+                  [class.active]="reviewForm.rating >= star"
+                  (click)="reviewForm.rating = star"
+                  style="cursor: pointer; font-size: 1.5rem; margin-right: 5px; color: #e4e5e9;">
+            </span>
+          </div>
+          <small class="text-muted">Selected: {{ reviewForm.rating }}/5</small>
+        </div>
+        <div class="form-group mb-3">
+          <label for="comment">Comment *</label>
+          <textarea id="comment" name="comment" class="form-control" rows="4" 
+                    [(ngModel)]="reviewForm.comment" 
+                    required
+                    maxlength="1000"
+                    placeholder="Share your experience..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeReviewForm()" [disabled]="isSubmittingReview">Cancel</button>
+        <button type="submit" class="btn btn-primary" 
+                [disabled]="reviewFormNg.invalid || reviewForm.rating === 0 || isSubmittingReview">
+          <span *ngIf="isSubmittingReview" class="spinner-border spinner-border-sm me-2"></span>
+          {{ isSubmittingReview ? 'Submitting...' : 'Submit Review' }}
+        </button>
+      </div>
+    </form>
+    <div *ngIf="reviewSubmittedMessage" class="alert mt-3" 
+         [ngClass]="{'alert-success': reviewSubmittedMessage.includes('Thank you'), 'alert-danger': !reviewSubmittedMessage.includes('Thank you')}">
+      {{ reviewSubmittedMessage }}
+    </div>
+  </div>
+</div>
+</div>

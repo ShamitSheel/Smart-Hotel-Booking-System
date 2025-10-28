@@ -1,0 +1,233 @@
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header bg-primary text-white text-center py-4 rounded-top">
+          <h2 class="fw-bold mb-0">Complete Your Booking</h2>
+        </div>
+        <div class="card-body p-4">
+          <form #bookingForm="ngForm" (ngSubmit)="onSubmit(bookingForm)">
+
+            <div class="row g-4 mb-4">
+              <h4 class="fw-bold text-dark">Your Details</h4>
+              <div class="col-md-6">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" [(ngModel)]="guestDetails.firstName"
+                  name="firstName" required>
+              </div>
+              <div class="col-md-6">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" [(ngModel)]="guestDetails.lastName"
+                  name="lastName" required>
+              </div>
+              <div class="col-md-6">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" [(ngModel)]="guestDetails.email" name="email"
+                  required email>
+              </div>
+              <div class="col-md-6">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" [(ngModel)]="guestDetails.phone" name="phone" required
+                  pattern="[0-9]{10}">
+                <div
+                  *ngIf="bookingForm.controls['phone']?.errors?.['pattern'] && (bookingForm.controls['phone']?.dirty || bookingForm.controls['phone']?.touched)"
+                  class="text-danger mt-1">
+                  <small>Phone number must be exactly 10 digits.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-4 mb-4">
+              <h4 class="fw-bold text-dark">Booking Information</h4>
+              <!-- Update the check-in date input to prevent past dates -->
+              <div class="col-md-6">
+                <label for="checkInDate" class="form-label">Check-in Date</label>
+                <input type="date" class="form-control" id="checkInDate" [(ngModel)]="bookingDetails.checkInDate"
+                  name="checkInDate" required (change)="validateDatesAndCalculate()" [min]="getTodayDate()">
+              </div>
+
+              <div class="col-md-6">
+                <label for="checkOutDate" class="form-label">Check-out Date</label>
+                <input type="date" class="form-control" id="checkOutDate" [(ngModel)]="bookingDetails.checkOutDate"
+                  name="checkOutDate" required (change)="validateDatesAndCalculate()">
+                <div *ngIf="dateError" class="text-danger mt-1">
+                  <small>{{ dateError }}</small>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <label for="numberOfRooms" class="form-label">Number of Rooms</label>
+                <input type="number" class="form-control" id="numberOfRooms" [(ngModel)]="bookingDetails.numberOfRooms"
+                  name="numberOfRooms" min="1" [max]="availableRooms || 999" (change)="onNumberOfRoomsChange()"
+                  required>
+
+                <div *ngIf="isCheckingAvailability" class="text-info mt-1">
+                  <small><i class="spinner-border spinner-border-sm me-2"></i>Checking availability...</small>
+                </div>
+
+                <div *ngIf="availabilityError" class="text-danger mt-1">
+                  <small>{{ availabilityError }}</small>
+                </div>
+
+                <div *ngIf="!isCheckingAvailability && !availabilityError && availableRooms > 0"
+                  class="text-success mt-1">
+                  <small><i class="bi bi-check-circle me-1"></i>{{ availableRooms }} rooms available for selected
+                    dates</small>
+                </div>
+
+                <small class="text-danger" *ngIf="bookingDetails.numberOfRooms > availableRooms && availableRooms > 0">
+                  Only {{ availableRooms }} rooms are available for the selected dates.
+                </small>
+              </div>
+            </div>
+
+            <div class="row g-3 mb-4">
+              <h4 class="fw-bold text-dark">Have a Coupon?</h4>
+              <div class="col-md-8">
+                <input type="text" class="form-control" placeholder="Enter coupon code"
+                  [(ngModel)]="bookingDetails.couponCode" name="couponCode">
+              </div>
+              <div class="col-md-4">
+                <button type="button" class="btn btn-outline-primary w-100" (click)="applyCoupon()">Apply</button>
+              </div>
+              <div class="col-12">
+                <div *ngIf="errorMessage" class="alert alert-danger p-2" role="alert"><small>{{ errorMessage }}</small>
+                </div>
+                <div *ngIf="successMessage" class="alert alert-success p-2" role="alert"><small>{{ successMessage
+                    }}</small></div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <h4 class="fw-bold text-dark">Loyalty Points</h4>
+              <div class="d-flex justify-content-between align-items-center mb-2 p-3 rounded-3 bg-light border">
+                <span>
+                  <i class="bi bi-star-fill text-warning me-2"></i>
+                  <strong>Your Points:</strong> {{ userLoyaltyPoints | number:'1.0-0' }}
+                </span>
+                <div class="form-check form-switch" *ngIf="userLoyaltyPoints > 0">
+                  <input class="form-check-input" type="checkbox" id="useLoyaltyPoints" [(ngModel)]="useLoyaltyPoints"
+                    name="useLoyaltyPoints" (change)="onToggleLoyaltyPoints()">
+                  <label class="form-check-label" for="useLoyaltyPoints">Use Points</label>
+                </div>
+              </div>
+
+              <div class="mt-2" *ngIf="useLoyaltyPoints">
+                <label for="pointsToUse" class="form-label">Points to Use</label>
+                <input type="number" class="form-control" id="pointsToUse" [(ngModel)]="pointsToUse" name="pointsToUse"
+                  [min]="0" [max]="userLoyaltyPoints" (change)="calculateTotal()" required>
+                <small class="text-danger" *ngIf="pointsToUse > userLoyaltyPoints">
+                  You can't use more points than you have.
+                </small>
+                <small class="text-danger"
+                  *ngIf="loyaltyPointsDiscount > 0 && pointsToUse > (totalPrice - couponDiscount)">
+                  Points used cannot exceed the price after coupon discount (₹{{ totalPrice - couponDiscount |
+                  number:'1.0-0' }}).
+                </small>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <h4 class="fw-bold text-dark">Payment Details</h4>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="paymentOption" id="payAtProperty"
+                  value="Pay at property" [(ngModel)]="bookingDetails.paymentOption" (change)="onPaymentOptionChange()">
+                <label class="form-check-label fw-bold" for="payAtProperty">
+                  Pay at property
+                </label>
+              </div>
+              <div class="form-check mt-2">
+                <input class="form-check-input" type="radio" name="paymentOption" id="payOnline" value="Pay now"
+                  [(ngModel)]="bookingDetails.paymentOption" (change)="onPaymentOptionChange()">
+                <label class="form-check-label fw-bold" for="payOnline">
+                  Pay Now
+                </label>
+                <div class="payment-options mt-2 ps-4" *ngIf="isPaymentOnline">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="onlineOption" id="upi" value="UPI"
+                      [(ngModel)]="bookingDetails.paymentOption" (change)="clearCardDetails()">
+                    <label class="form-check-label" for="upi">UPI</label>
+                    <div *ngIf="bookingDetails.paymentOption === 'UPI'" class="mt-1">
+                      <input type="text" class="form-control" placeholder="Enter UPI ID"
+                        [(ngModel)]="bookingDetails.upiId" name="upiId" required
+                        pattern="[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}">
+                      <small class="text-danger"
+                        *ngIf="bookingForm.controls['upiId']?.errors?.['pattern'] && (bookingForm.controls['upiId']?.dirty || bookingForm.controls['upiId']?.touched)">
+                        Invalid UPI ID format.
+                      </small>
+                    </div>
+                  </div>
+                  <div class="form-check mt-2">
+                    <input class="form-check-input" type="radio" name="onlineOption" id="card" value="Card"
+                      [(ngModel)]="bookingDetails.paymentOption" (change)="clearUpiDetails()">
+                    <label class="form-check-label" for="card">Card</label>
+                    <div *ngIf="bookingDetails.paymentOption === 'Card'" class="row g-2 mt-1">
+                      <div class="col-12">
+                        <input type="text" class="form-control" placeholder="Card Number"
+                          [(ngModel)]="bookingDetails.cardNumber" name="cardNumber" required
+                          pattern="^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13}|6(?:011|5[0-9]{2})[0-9]{12})$">
+                        <small class="text-danger"
+                          *ngIf="bookingForm.controls['cardNumber']?.errors?.['pattern'] && (bookingForm.controls['cardNumber']?.dirty || bookingForm.controls['cardNumber']?.touched)">
+                          Invalid card number.
+                        </small>
+                      </div>
+                      <div class="col-6">
+                        <input type="text" class="form-control" placeholder="MM/YY"
+                          [(ngModel)]="bookingDetails.cardExpiry" name="cardExpiry" required
+                          pattern="(0[1-9]|1[0-2])\/\d{2}">
+                        <small class="text-danger"
+                          *ngIf="bookingForm.controls['cardExpiry']?.errors?.['pattern'] && (bookingForm.controls['cardExpiry']?.dirty || bookingForm.controls['cardExpiry']?.touched)">
+                          Invalid expiry (MM/YY).
+                        </small>
+                      </div>
+                      <div class="col-6">
+                        <input type="text" class="form-control" placeholder="CVV" [(ngModel)]="bookingDetails.cardCvv"
+                          name="cardCvv" required pattern="\d{3,4}">
+                        <small class="text-danger"
+                          *ngIf="bookingForm.controls['cardCvv']?.errors?.['pattern'] && (bookingForm.controls['cardCvv']?.dirty || bookingForm.controls['cardCvv']?.touched)">
+                          Invalid CVV (3 or 4 digits).
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-4" *ngIf="room && !availabilityError">
+              <h4 class="fw-bold text-dark">Booking Summary</h4>
+              <div class="summary-box p-3 rounded-3 bg-light border">
+                <div class="d-flex justify-content-between mb-2">
+                  <span class="fw-bold">{{ room.name }} ({{ bookingDetails.numberOfRooms }} room<span
+                      *ngIf="bookingDetails.numberOfRooms > 1">s</span>)</span>
+                  <span>₹{{ totalPrice | number:'1.0-0' }}</span>
+                </div>
+                <div class="d-flex justify-content-between text-success" *ngIf="couponDiscount > 0">
+                  <span>Coupon Discount</span>
+                  <span>- ₹{{ couponDiscount | number:'1.0-0' }}</span>
+                </div>
+                <div class="d-flex justify-content-between text-success" *ngIf="loyaltyPointsDiscount > 0">
+                  <span>Loyalty Points Discount</span>
+                  <span>- ₹{{ loyaltyPointsDiscount | number:'1.0-0' }}</span>
+                </div>
+                <hr class="my-2">
+                <div class="d-flex justify-content-between fw-bold fs-5 text-primary">
+                  <span>Final Total</span>
+                  <span>₹{{ finalPrice | number:'1.0-0' }}</span>
+                </div>
+                <p class="text-muted text-end mt-1"><small>Includes all taxes and fees</small></p>
+              </div>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success btn-lg"
+                [disabled]="bookingForm.invalid || !!dateError || !!availabilityError || finalPrice <= 0 || !room || isCheckingAvailability">
+                <span *ngIf="isCheckingAvailability" class="spinner-border spinner-border-sm me-2"></span>
+                Confirm Booking
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="photos-media-container">
+  <h3>3. Photos & Media</h3>
+  
+  <div 
+    class="drag-drop-area"
+    [class.is-dragging]="isDragging"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)">
+    <i class="bi bi-cloud-arrow-up-fill upload-icon"></i>
+    <p>Drag and drop your images here or</p>
+    <label for="file-upload" class="file-upload-btn">
+      <i class="bi bi-file-earmark-plus"></i> Browse Files
+    </label>
+    <input 
+      id="file-upload" 
+      type="file" 
+      multiple 
+      accept="image/*" 
+      (change)="onFileSelected($event)"
+      hidden>
+  </div>
+
+  <div class="image-preview-list">
+    <div *ngFor="let image of imagePreviews; let i = index" class="image-preview-item">
+      <img [src]="image.url" alt="Hotel Photo">
+      <div class="image-actions">
+        <button class="remove-btn" (click)="removeImage(i)">
+          <i class="bi bi-x-circle-fill"></i>
+        </button>
+        <button 
+          class="primary-btn" 
+          [class.is-primary]="image.isPrimary"
+          (click)="setPrimaryImage(i)">
+          <i class="bi bi-star-fill"></i> {{ image.isPrimary ? 'Primary' : '' }}
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="form-actions">
+    <button type="button" class="btn-secondary" (click)="onGoBack()">
+      <i class="bi bi-arrow-left"></i> Back
+    </button>
+    <button type="submit" class="btn-primary" [disabled]="imagePreviews.length === 0" (click)="onSubmit()">
+      Next <i class="bi bi-arrow-right"></i>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+/* room-card.component.css */
+.room-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.room-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Updated styling for the image container */
+.room-card .row > .col-md-4 {
+  display: flex;
+  align-items: stretch;
+}
+
+.room-image {
+  width: 100%;
+  height: 100%; /* Make the image fill the height of its container */
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Allow card body to grow and fill space */
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #777;
+}
+
+.room-amenities-list {
+  flex-grow: 1; /* Allow amenities list to push content down */
+}
+
+.room-amenities-list ul {
+  padding-left: 0;
+  margin: 0;
+}
+
+.room-amenities-list li {
+  font-size: 0.9rem;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+.room-amenities-list i {
+  font-size: 1.1rem;
+  width: 25px; /* Fixed width for icon alignment */
+}
+
+.card-link {
+  color: var(--bs-primary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.price-display {
+  padding: 1rem;
+}
+
+.original-price {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.current-price {
+  font-size: 2rem;
+  color: #000;
+}
+
+.total-price {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.taxes-fees {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.btn-primary {
+  font-weight: bold;
+}
+
+/* Availability message styling */
+.text-warning {
+  font-size: 0.85rem;
+}
+.text-danger {
+  font-size: 0.85rem;
+}

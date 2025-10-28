@@ -1,0 +1,78 @@
+.form-card-background {
+  background-image: url("https://as1.ftcdn.net/jpg/02/96/11/08/1000_F_296110892_H5qZL3Y3FOoSzTNWpc1KbaCNt4LLEQaM.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/*
+ * Login Page CSS
+ * This CSS fixes the icon positioning for the form-floating inputs.
+ */
+
+.icon-inside-input {
+  position: absolute;
+  top: 50%;
+  right: 1rem; /* Adjust this value for more or less space from the right edge */
+  transform: translateY(-50%);
+  pointer-events: none; /* Allows clicks to pass through the icon to the input field */
+  color: #6c757d; /* Optional: Sets a default color for the icon */
+  font-size: 1.25rem; /* Optional: Adjusts the icon size */
+  transition: all 0.2s ease-in-out; /* Optional: Adds a smooth transition */
+}
+
+/* Adjust input padding to prevent text from overlapping the icon */
+.form-floating .form-control {
+  padding-right: 3rem; /* Increase padding on the right side to make space for the icon */
+}
+
+/* Optional: Fade the icon a bit when the input is focused to enhance readability */
+.form-floating .form-control:focus + label .bi {
+  color: #0d6efd;
+}
+
+/* Optional: Style to make the label and icon a bit more cohesive */
+.form-floating label {
+  padding-right: 3rem;
+}
+
+
+
+
+
+
+
+
+.marquee-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* This hides the text when it goes outside the container */
+  height: 50px; /* Adjust height as needed */
+  background-color: #f0f0f0; /* Example background */
+}
+
+.marquee {
+  position: absolute;
+  white-space: nowrap;
+  animation: marquee-animation 15s linear infinite; /* Adjust duration for speed */
+}
+
+.admin-login-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* This centers the text both horizontally and vertically */
+  z-index: 10; /* Ensures the text is on top of the moving marquee */
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background for readability */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+@keyframes marquee-animation {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

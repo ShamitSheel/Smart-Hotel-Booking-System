@@ -1,0 +1,180 @@
+<div class="container my-5" *ngIf="hotel(); else loadingOrNotFound">
+  <div class="row">
+    <div class="col-12 mb-4">
+      <div id="hotelImageCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner rounded-3 shadow-sm">
+          <div class="carousel-item" *ngFor="let image of hotel()!.images; let i = index"
+            [ngClass]="{ 'active': i === 0 }">
+            <img [src]="image" class="d-block w-100 hotel-carousel-image" alt="Hotel Image {{ i + 1 }}">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#hotelImageCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#hotelImageCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card p-4 shadow-sm">
+        <div class="d-flex justify-content-between align-items-start mb-4">
+          <div>
+            <h1 class="fw-bold mb-1">{{ hotel()!.name }}</h1>
+            <p class="text-muted mb-2">
+              <i class="bi bi-geo-alt-fill me-1 text-danger"></i>
+              {{ hotel()!.address.street }}, {{ hotel()!.address.city }}, {{ hotel()!.address.country }}
+            </p>
+            <div class="d-flex align-items-center">
+              <span class="badge bg-primary fs-6 me-2">{{ hotel()!.rating | number:'1.1-1' }}</span>
+              <span class="fw-bold" [ngClass]="getRatingClass(hotel()!.rating)">{{ getRatingText(hotel()!.rating)
+                }}</span>
+              <span class="text-muted ms-2">({{ hotel()!.reviews }} reviews)</span>
+            </div>
+          </div>
+          <div class="text-end">
+            <h5 class="fw-bold mb-1">Contact Details</h5>
+            <p class="mb-1">
+              <i class="bi bi-telephone-fill me-2 text-primary"></i>
+              <a [href]="'tel:' + hotel()!.contact.phone" class="text-decoration-none text-body">{{
+                hotel()!.contact.phone }}</a>
+            </p>
+            <p class="mb-1">
+              <i class="bi bi-envelope-fill me-2 text-primary"></i>
+              <a [href]="'mailto:' + hotel()!.contact.email" class="text-decoration-none text-body">{{
+                hotel()!.contact.email }}</a>
+            </p>
+            <p class="mb-0" *ngIf="hotel()!.contact.website">
+              <i class="bi bi-globe me-2 text-primary"></i>
+              <a [href]="hotel()!.contact.website" target="_blank" class="text-decoration-none text-body">{{
+                hotel()!.contact.website }}</a>
+            </p>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <h2 class="fw-bold mb-3"><i class="bi bi-building me-2 text-primary"></i>About this place</h2>
+        <p class="text-secondary">{{ hotel()!.description }}</p>
+
+        <div class="row g-3 mt-3">
+          <div class="col-md-6">
+            <h5 class="fw-bold mb-3"><i class="bi bi-list-check me-2 text-success"></i>Key Features</h5>
+            <ul class="list-unstyled hotel-features">
+              <li *ngFor="let feature of hotel()!.features">
+                <i class="bi bi-check-circle-fill me-2 text-success"></i>
+                {{ feature }}
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h5 class="fw-bold mb-3"><i class="bi bi-wifi me-2 text-info"></i>Amenities</h5>
+            <ul class="list-unstyled hotel-amenities">
+              <li *ngFor="let amenity of hotel()!.amenities">
+                <i class="bi bi-check-circle-fill me-2 text-success"></i>
+                {{ amenity }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <h2 class="fw-bold mb-3"><i class="bi bi-journal-text me-2 text-secondary"></i>Hotel Policies</h2>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="policy-item p-3 rounded bg-light">
+              <h6 class="fw-bold"><i class="bi bi-clock-fill me-2 text-primary"></i>Check-in</h6>
+              <p class="mb-0">{{ hotel()!.policies.checkInTime }}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="policy-item p-3 rounded bg-light">
+              <h6 class="fw-bold"><i class="bi bi-clock-fill me-2 text-primary"></i>Check-out</h6>
+              <p class="mb-0">{{ hotel()!.policies.checkOutTime }}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="policy-item p-3 rounded bg-light">
+              <h6 class="fw-bold"><i class="bi bi-arrow-counterclockwise me-2 text-warning"></i>Cancellation</h6>
+              <p class="mb-0">{{ hotel()!.policies.cancellationPolicy }}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="policy-item p-3 rounded bg-light">
+              <h6 class="fw-bold"><i class="bi bi-smoke me-2"
+                  [ngClass]="{'text-success': hotel()!.policies.smokingAllowed, 'text-danger': !hotel()!.policies.smokingAllowed}"></i><i
+                  class="bi bi-ban-fill"></i> Smoking</h6>
+              <p class="mb-0">{{ hotel()!.policies.smokingAllowed ? 'Allowed' : 'Not Allowed' }}</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="policy-item p-3 rounded bg-light">
+              <h6 class="fw-bold"><i class="bi bi-house-door-fill me-2"
+                  [ngClass]="{'text-success': hotel()!.policies.petsAllowed, 'text-danger': !hotel()!.policies.petsAllowed}"></i>Pets
+              </h6>
+              <p class="mb-0">{{ hotel()!.policies.petsAllowed ? 'Allowed' : 'Not Allowed' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <h2 class="fw-bold mb-3"><i class="bi bi-door-open-fill me-2 text-primary"></i>Available Rooms</h2>
+        <div class="row g-4">
+          <div class="col-12" *ngFor="let room of hotel()!.rooms">
+            <app-room-component [room]="room" [hotelId]="hotel()!.id"></app-room-component>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <h2 class="fw-bold mb-3"><i class="bi bi-star-fill me-2 text-warning"></i>Customer Reviews</h2>
+        <div *ngIf="reviews().length > 0; else noReviews">
+          <div class="reviews-list">
+            <div class="review-item card mb-3" *ngFor="let review of reviews()">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <h5 class="card-title mb-0">{{ review.reviewerName }}</h5>
+                  <div class="review-rating">
+                    <span *ngFor="let star of [1, 2, 3, 4, 5]" class="bi bi-star-fill"
+                      [class.active]="review.rating >= star"></span>
+                    <span class="ms-2">({{ review.rating }}/5)</span>
+                  </div>
+                </div>
+                <p class="card-text">{{ review.comment }}</p>
+                <small class="text-muted">Reviewed on {{ review.timestamp | date:'mediumDate' }}</small>
+                <div *ngIf="review.hotelResponse">
+                  <div class="alert alert-secondary mt-3">
+                    <h6 class="alert-heading mb-1"><i class="bi bi-person-fill me-1"></i>Hotel Response:</h6>
+                    <p class="mb-0">{{ review.hotelResponse }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #noReviews>
+          <div class="alert alert-info" role="alert">
+            This hotel has no reviews yet. Be the first to leave one!
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingOrNotFound>
+  <div class="container my-5 text-center">
+    <div class="spinner-border text-primary" role="status" *ngIf="hotel() === undefined">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+ 
+    <div class="alert alert-warning mt-4" role="alert" *ngIf="hotel() === null">
+      Hotel not found. Please try a different hotel.
+    </div>
+  </div>
+</ng-template>

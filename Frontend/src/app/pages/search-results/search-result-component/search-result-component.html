@@ -1,0 +1,29 @@
+<div class="search-results-page-wrapper container mt-4">
+    <div class="header-section text-center">
+        <h2 class="results-heading fw-bold d-flex align-items-center justify-content-center">
+            <i class="bi bi-building me-3"></i>
+            <span>Hotels in &nbsp;{{ searchQuery || 'All Locations' }}</span>
+        </h2>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-lg-9 col-md-10">
+            <div class="results-container">
+                <ng-container *ngIf="hotels().length > 0; else noHotelsFound">
+                    <div class="hotel-cards-list row g-4">
+                        <div class="col-12" *ngFor="let hotel of hotels()">
+                            <app-hotel-search-cards [hotel]="hotel"></app-hotel-search-cards>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-template #noHotelsFound>
+                    <div class="no-results text-center p-5 bg-white rounded shadow-sm">
+                        <h3 class="text-secondary">No hotels found matching "{{ searchQuery }}".</h3>
+                        <p class="text-muted">Please try a different location or a broader search term.</p>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
+    <div class="w-full max-w-2xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
+        <div class="md:flex">
+            <div class="w-full md:w-3/5 p-8 lg:p-12">
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2 text-center">
+                    Create Your Account
+                </h2>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 text-center">
+                    Join Hotelify.com to book your perfect stay.
+                </p>
+
+                <!-- UPDATED: Role selection with correct values -->
+                <div class="flex items-center justify-center space-x-4 mb-6 p-1 bg-gray-200 dark:bg-gray-700 rounded-full">
+                    <button type="button" 
+                            class="py-2 px-6 rounded-full font-semibold transition-colors duration-300"
+                            [ngClass]="{'bg-blue-600 text-white shadow-md': registerForm.get('role')?.value === 'USER', 'text-gray-800 dark:text-gray-200': registerForm.get('role')?.value !== 'USER'}"
+                            (click)="selectRole('USER')">
+                        User
+                    </button>
+                    <button type="button" 
+                            class="py-2 px-6 rounded-full font-semibold transition-colors duration-300"
+                            [ngClass]="{'bg-blue-600 text-white shadow-md': registerForm.get('role')?.value === 'ADMIN', 'text-gray-800 dark:text-gray-200': registerForm.get('role')?.value !== 'ADMIN'}"
+                            (click)="selectRole('ADMIN')">
+                        Admin
+                    </button>
+                </div>
+
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                    <div class="grid md:grid-cols-2 md:gap-6">
+                        <div class="relative z-0 w-full mb-5 group">
+                            <input type="text" formControlName="firstName" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First Name</label>
+                            <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+                                <small class="text-red-500">First Name is required.</small>
+                            </div>
+                        </div>
+                        <div class="relative z-0 w-full mb-5 group">
+                            <input type="text" formControlName="lastName" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                            <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last Name</label>
+                            <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+                                <small class="text-red-500">Last Name is required.</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- NEW: Username Field -->
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="text" formControlName="username" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
+                        <div *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched">
+                            <small class="text-red-500">Username is required and must be 3-20 characters.</small>
+                        </div>
+                    </div>
+
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="email" formControlName="email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                        <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+                            <small *ngIf="registerForm.get('email')?.hasError('required')" class="text-red-500">Email is required.</small>
+                            <small *ngIf="registerForm.get('email')?.hasError('email')" class="text-red-500">Please enter a valid email.</small>
+                        </div>
+                    </div>
+
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="tel" formControlName="phone" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone number</label>
+                        <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched">
+                            <small *ngIf="registerForm.get('phone')?.hasError('required')" class="text-red-500">Phone number is required.</small>
+                        </div>
+                    </div>
+
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="password" formControlName="password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                        <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+                            <small *ngIf="registerForm.get('password')?.hasError('required')" class="text-red-500">Password is required.</small>
+                            <small *ngIf="registerForm.get('password')?.hasError('minlength')" class="text-red-500">Password must be at least 6 characters.</small>
+                        </div>
+                    </div>
+
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="password" formControlName="confirmPassword" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                        <label class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
+                        <div *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+                            <small *ngIf="registerForm.get('confirmPassword')?.hasError('required')" class="text-red-500">Confirm password is required.</small>
+                            <small *ngIf="registerForm.hasError('mismatch')" class="text-red-500">Passwords do not match.</small>
+                        </div>
+                    </div>
+
+                    <button type="submit" [disabled]="registerForm.invalid" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition-transform transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+                        Register
+                    </button>
+                    <p class="text-sm font-light text-gray-500 dark:text-gray-400 mt-4 text-center">
+                        Already have an account? <a routerLink="/login" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Login here</a>
+                    </p>
+                </form>
+            </div>
+            
+            <div class="hidden md:block md:w-2/5 relative bg-gradient-to-br from-blue-500 to-purple-600">
+                <div class="flex items-center justify-center h-full p-4">
+                    <div class="text-center text-white">
+                        <svg class="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h3 class="text-2xl font-bold">Welcome to Hotelify!</h3>
+                        <p class="text-sm mt-2">
+                            A seamless experience for your hotel bookings awaits you.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

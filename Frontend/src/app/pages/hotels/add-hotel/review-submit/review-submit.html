@@ -1,0 +1,77 @@
+<div class="form-container">
+  <h3>7. Review & Submit</h3>
+  <h5>Please review all the information below before submitting your hotel for listing.</h5>
+
+  <div class="review-section">
+    <h4><i class="bi bi-info-circle-fill"></i> Basic Information</h4>
+    <div class="review-details">
+      <p><strong>Hotel Name:</strong> {{ hotelData.name }}</p>
+      <p><strong>Description:</strong> {{ hotelData.description }}</p>
+      <p><strong>Hotel Type:</strong> {{ hotelData.type || 'N/A' }}</p>
+    </div>
+  </div>
+  
+  <div class="review-section">
+    <h4><i class="bi bi-geo-alt-fill"></i> Location & Contact</h4>
+    <div class="review-details">
+      <p><strong>Address:</strong> {{ hotelData.address?.street }}, {{ hotelData.address?.city }}, {{ hotelData.address?.country }} - {{ hotelData.address?.zipCode }}</p>
+      <p><strong>Phone:</strong> {{ hotelData.contact?.phone }}</p>
+      <p><strong>Email:</strong> {{ hotelData.contact?.email }}</p>
+      <p><strong>Website:</strong> {{ hotelData.contact?.website || 'N/A' }}</p>
+    </div>
+  </div>
+
+  <div class="review-section">
+    <h4><i class="bi bi-images"></i> Photos & Media</h4>
+    <div class="image-gallery">
+      <div *ngFor="let image of hotelData.images" class="image-preview">
+        <img [src]="image" alt="Hotel Photo" />
+      </div>
+    </div>
+  </div>
+
+  <div class="review-section">
+    <h4><i class="bi bi-list-check"></i> Features & Amenities</h4>
+    <div class="review-details">
+      <p><strong>Features:</strong> {{ featuresList }}</p>
+      <p><strong>Amenities:</strong> {{ amenitiesList }}</p>
+    </div>
+  </div>
+  
+  <div class="review-section">
+    <h4><i class="bi bi-file-earmark-text-fill"></i> Policies</h4>
+    <div class="review-details">
+      <p><strong>Check-in Time:</strong> {{ hotelData.policies?.checkInTime }}</p>
+      <p><strong>Check-out Time:</strong> {{ hotelData.policies?.checkOutTime }}</p>
+      <p><strong>Cancellation Policy:</strong> {{ hotelData.policies?.cancellationPolicy }}</p>
+      <p><strong>Is Fully Refundable:</strong> {{ hotelData.isFullyRefundable ? 'Yes' : 'No' }}</p>
+      <p><strong>Reserve Now, Pay Later:</strong> {{ hotelData.reserveNowPayLater ? 'Yes' : 'No' }}</p>
+      <p><strong>Free Breakfast:</strong> {{ hotelData.hasFreeBreakfast ? 'Yes' : 'No' }}</p>
+    </div>
+  </div>
+  
+  <div class="review-section" *ngIf="hotelData.rooms && hotelData.rooms.length > 0">
+    <h4><i class="bi bi-door-open-fill"></i> Room Details</h4>
+    <div class="room-list">
+      <div *ngFor="let room of hotelData.rooms" class="room-item">
+        <div class="room-details">
+          <h5>{{ room.name }}</h5>
+          <p>{{ room.description }}</p>
+          <p class="room-price">
+            <span class="original-price" *ngIf="room.discountedPrice < room.originalPrice">${{ room.originalPrice }}</span>
+            <span class="discounted-price">${{ room.discountedPrice }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="button" class="btn-secondary" (click)="onGoBack()">
+      <i class="bi bi-arrow-left"></i> Back
+    </button>
+    <button type="submit" class="btn-primary" (click)="onSubmit()">
+      <i class="bi bi-check-circle-fill"></i> Submit Hotel
+    </button>
+  </div>
+</div>

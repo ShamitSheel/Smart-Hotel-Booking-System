@@ -1,0 +1,197 @@
+/*
+ * --- Global Variables & Reset ---
+ * Define a richer color palette
+ */
+:root {
+    --footer-bg: #212529;
+    --footer-text: #adb5bd;
+    --footer-heading: #ffffff;
+    --primary-color: #007bff;
+    --link-hover: #ffffff;
+    --border-color: #343a40;
+    --container-width: 1000px; 
+}
+
+/* --- General Footer Styles --- */
+.site-footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 60px 0 20px; /* REDUCED: Bottom padding reduced from 30px to 20px */
+    font-family: 'Poppins', sans-serif;
+    border-top: 5px solid var(--primary-color);
+}
+
+/* Footer Container and Layout */
+.site-footer .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: left;
+    gap: 50px; /* INCREASED: Gap increased from 30px to 50px for more separation */
+}
+
+.footer-section {
+    flex: 1;
+    padding: 0;
+    margin-bottom: 30px;
+    min-width: 220px;
+}
+
+/* Enhanced Heading Underline Style */
+.footer-section h3 {
+    color: var(--footer-heading);
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    font-weight: 600;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+.footer-section p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--footer-text);
+}
+
+/* --- Links Section --- */
+.footer-section.links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section.links li {
+    margin-bottom: 12px;
+}
+
+.footer-section.links a {
+    color: var(--footer-text);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+    display: block;
+    position: relative;
+    padding-left: 15px;
+}
+
+.footer-section.links a::before {
+    content: '\203A';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-weight: 900;
+}
+
+.footer-section.links a:hover {
+    color: var(--link-hover);
+    padding-left: 20px;
+}
+
+/* --- Social and Contact Links --- */
+.social-links {
+    margin-top: 25px;
+}
+
+.social-links a {
+    background: var(--border-color);
+    color: var(--footer-text);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-right: 12px;
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.social-links a:hover {
+    background-color: var(--primary-color);
+    color: var(--footer-heading);
+    transform: translateY(-4px) scale(1.05);
+}
+
+.footer-section.contact p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    color: var(--footer-text);
+}
+
+.footer-section.contact i {
+    margin-right: 10px;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+/* --- Bottom Copyright Section --- */
+.footer-bottom {
+    text-align: center;
+    padding: 15px 0 0; /* REDUCED: Top padding reduced from 25px to 15px */
+    border-top: 1px solid var(--border-color);
+    margin-top: 20px; /* REDUCED: Top margin reduced from 30px to 20px */
+    font-size: 0.85rem;
+    color: var(--footer-text);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 992px) {
+    .site-footer .container {
+        max-width: 90%; 
+    }
+    .footer-content {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px; /* Reduced gap on mobile */
+    }
+    .footer-section {
+        padding: 0;
+        min-width: 90%;
+    }
+    .footer-section h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .footer-section.contact,
+    .footer-section.about {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .social-links {
+        display: flex;
+        justify-content: center;
+    }
+    .footer-section.contact p {
+        display: flex;
+        justify-content: flex-start;
+        width: fit-content;
+        margin: 5px auto;
+    }
+}

@@ -1,0 +1,67 @@
+<div class="view-section">
+  <div class="header">
+    <h4><i class="bi bi-door-open-fill"></i> Rooms</h4>
+    <button type="button" class="btn-edit" (click)="onEdit()" *ngIf="!isEditing">Edit</button>
+  </div>
+  
+  <div class="content" *ngIf="!isEditing">
+    <div class="rooms-list-container">
+      <div class="room-summary-item" *ngFor="let room of rooms">
+        <div class="room-info">
+          <h5>{{ room.name }}</h5>
+          <p class="description">{{ room.description }}</p>
+          <hr class="divider">
+          <p><strong>Max Guests:</strong> {{ room.maxGuests }}</p>
+          <p><strong>Bed Type:</strong> {{ room.bedType }}</p>
+          <p class="mt-2">
+            <strong>Price:</strong>
+            <span class="original-price" *ngIf="room.discountedPrice < room.originalPrice">
+              {{ room.originalPrice | currency:"INR" }}
+            </span>
+            <span class="discounted-price">{{ room.discountedPrice | currency:"INR" }} / night</span>
+          </p>
+          <p><strong>Total Price (incl. Taxes):</strong> {{ room.totalPriceIncludesTaxes | currency:"INR" }}</p>
+          <p><strong>Available:</strong> {{ room.quantityAvailable }}</p>
+          <hr class="divider">
+          <p class="amenities-list">
+            <strong>Amenities:</strong> {{ room.amenities.join(', ') || 'None' }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <p *ngIf="rooms.length === 0" class="empty-list">No rooms added yet.</p>
+  </div>
+  
+  <div class="edit-mode" *ngIf="isEditing">
+    <div class="rooms-list-editor">
+      <div class="room-editor-item" *ngFor="let room of rooms; let i = index">
+        <div class="room-editor-info">
+          <p>{{ room.name }} - {{ room.originalPrice | currency:"INR" }}</p>
+        </div>
+        <div class="room-editor-actions">
+          <button type="button" class="btn-edit-room" (click)="onEditRoom(room)">Edit</button>
+          <button type="button" class="btn-delete" (click)="onDeleteRoom(i)">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+      </div>
+      <p *ngIf="rooms.length === 0" class="empty-list">No rooms added yet.</p>
+    </div>
+    <button type="button" class="btn-add-room mt-3" (click)="onAddRoom()">Add New Room</button>
+    
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+      <button type="button" class="btn-save" (click)="onSave()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="showRoomForm">
+  <div class="modal-content">
+    <app-room-form
+      [roomToEdit]="roomToEdit"
+      (formSubmitted)="onRoomFormSubmitted($event)"
+      (formCanceled)="onRoomFormCanceled()">
+    </app-room-form>
+  </div>
+</div>

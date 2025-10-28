@@ -1,0 +1,110 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-section {
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+}
+
+h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+h4 i {
+  margin-right: 8px;
+}
+
+.checkbox-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkbox-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.form-actions button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.form-actions .btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.form-actions .btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* ... (existing styles) */
+
+.add-new-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.add-new-item input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc; /* Added border */
+  border-radius: 4px;
+}
+
+.add-new-item input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+.btn-icon-labeled {
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  display: flex; /* Makes the icon and text align */
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-icon-labeled:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

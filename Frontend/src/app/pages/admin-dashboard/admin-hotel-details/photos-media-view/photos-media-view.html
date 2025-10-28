@@ -1,0 +1,72 @@
+<div class="view-section">
+  <div class="header">
+    <h4><i class="bi bi-image-fill"></i> Photos & Media</h4>
+    <button type="button" class="btn-edit" (click)="onEdit()" *ngIf="!isEditing">Edit</button>
+  </div>
+  
+  <div class="content" *ngIf="!isEditing">
+    <div class="primary-image-container" *ngIf="primaryImage">
+      <h5>Primary Image</h5>
+      <img [src]="primaryImage" alt="Primary Hotel Photo" class="primary-image">
+    </div>
+    <div class="photo-grid" [class.no-primary]="!primaryImage">
+      <img *ngFor="let photo of photos" [src]="photo.url" alt="Hotel Photo">
+    </div>
+  </div>
+  
+  <div class="edit-mode" *ngIf="isEditing">
+    <div class="drop-zone-container">
+      <div 
+        class="drop-zone"
+        (dragover)="$event.preventDefault()"
+        (dragleave)="$event.preventDefault()"
+        (drop)="$event.preventDefault(); handleFiles($event.dataTransfer?.files || null)">
+        
+        <i class="bi bi-cloud-arrow-up-fill"></i>
+        <span>Drag & Drop photos here</span>
+        <span>or</span>
+        <label for="file-upload" class="file-upload-label">Browse Files</label>
+        <input id="file-upload" type="file" multiple (change)="onFileSelected($event)" style="display: none;">
+      </div>
+    </div>
+    
+    <div 
+      cdkDropList
+      [cdkDropListData]="photos"
+      (cdkDropListDropped)="onDrop($event)"
+      class="photo-list"
+      cdkDropListOrientation="horizontal">
+      <div 
+        class="photo-item" 
+        *ngFor="let photo of photos; let i = index" 
+        cdkDrag
+        [class.is-primary]="photo.url === primaryImage"> <img [src]="photo.url" alt="Hotel Photo">
+        
+        <div class="photo-overlay">
+          <div *ngIf="photo.isUploading" class="spinner-container">
+            <mat-spinner diameter="32"></mat-spinner>
+          </div>
+          <ng-container *ngIf="!photo.isUploading">
+            <button (click)="onDelete(i)" class="delete-btn">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+            <button 
+              *ngIf="photo.url !== primaryImage" 
+              (click)="setPrimary(photo.url)" 
+              class="primary-btn">
+              Set as Primary
+            </button>
+            <span *ngIf="photo.url === primaryImage" class="primary-label">Primary</span>
+          </ng-container>
+        </div>
+        
+        <div class="cdk-drag-placeholder"></div>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+      <button type="button" class="btn-save" (click)="onSave()">Save</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+.add-hotel-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.stepper-timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.stepper-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1; /* Ensure circles are on top of the line */
+  flex: 1;
+}
+
+.stepper-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  color: #757575;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.stepper-label {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #757575;
+  text-align: center;
+}
+
+.stepper-step.active .stepper-circle,
+.stepper-step.completed .stepper-circle {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.stepper-step.completed .stepper-label {
+  color: #000;
+}
+
+.stepper-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #e0e0e0;
+  top: 20px;
+  left: 50%;
+  z-index: 0;
+}
+
+.stepper-step:last-child .stepper-line {
+  display: none;
+}
+
+/* Optional: to make the line fill up as steps are completed */
+.stepper-step.completed ~ .stepper-line {
+  background-color: #007bff;
+}
+
+/* ... (existing styles) */
+
+/* Modal styles for the Room Form */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Close button for the modal if needed, can be part of the room-form component */
+.modal-content .close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #888;
+}

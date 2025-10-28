@@ -1,0 +1,26 @@
+.header-section {
+    background: linear-gradient(to right, #f0f8ff, #e6f2ff);
+    color: #333;
+    padding: 2.5rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.results-heading {
+    font-size: 2rem;
+    color: #0077B6;
+    margin: 0;
+}
+
+.results-heading i {
+    font-size: 2.5rem;
+    color: #1c5e9c;
+}
+
+.results-heading span {
+    display: inline-block;
+}

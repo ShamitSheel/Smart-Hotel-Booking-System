@@ -1,0 +1,26 @@
+<nav class="admin-navbar">
+  <div class="navbar-container">
+    <a routerLink="/admin" class="navbar-brand">
+      <i class="bi bi-person-workspace navbar-brand-icon"></i>
+      <span class="navbar-brand-text">Manager Dashboard</span>
+    </a>
+
+    <div class="navbar-links">
+      <a routerLink="/admin" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"
+        class="nav-link">Dashboard</a>
+      <a routerLink="/admin/hotels" routerLinkActive="active-link" class="nav-link">Hotels</a>
+      <a routerLink="/admin/bookings" routerLinkActive="active-link" class="nav-link">Bookings</a>
+    </div>
+
+    <div class="navbar-user-info">
+      <a routerLink="/admin/profile" routerLinkActive="active-link" class="nav-link profile-link">
+        <i class="bi bi-person-circle"></i>
+      </a>
+      <span class="user-greeting">Hi, {{ userName }}</span>
+      <button (click)="logout()" class="logout-btn">Logout</button>
+                  <a routerLink="/profile"
+              class="block px-5 py-3 text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 text-base font-sans">My
+              Profile</a>
+    </div>
+  </div>
+</nav>

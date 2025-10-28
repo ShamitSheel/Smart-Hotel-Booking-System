@@ -1,0 +1,38 @@
+<form [formGroup]="basicInfoForm" (ngSubmit)="onSubmit()" class="form-container">
+  <h3>1. Basic Information</h3>
+
+  <div class="form-field">
+    <label for="name">Hotel Name</label>
+    <input id="name" type="text" formControlName="name">
+    <div *ngIf="basicInfoForm.get('name')?.invalid && basicInfoForm.get('name')?.touched" class="error-message">
+      <div *ngIf="basicInfoForm.get('name')?.errors?.['required']">
+        Hotel name is required.
+      </div>
+      <div *ngIf="basicInfoForm.get('name')?.errors?.['minlength']">
+        Hotel name must be at least 3 characters long.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label for="description">Description</label>
+    <textarea id="description" formControlName="description"></textarea>
+    <div *ngIf="basicInfoForm.get('description')?.invalid && basicInfoForm.get('description')?.touched" class="error-message">
+      Description is required.
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label for="type">Hotel Type</label>
+    <select id="type" formControlName="type">
+      <option *ngFor="let type of hotelTypes" [value]="type">{{ type }}</option>
+    </select>
+    <div *ngIf="basicInfoForm.get('type')?.invalid && basicInfoForm.get('type')?.touched" class="error-message">
+      Hotel type is required.
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" [disabled]="basicInfoForm.invalid">Next</button>
+  </div>
+</form>

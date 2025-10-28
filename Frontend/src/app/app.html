@@ -1,0 +1,8 @@
+<app-navbar *ngIf="!router.url.startsWith('/admin')"></app-navbar>
+<app-admin-navbar *ngIf="router.url.startsWith('/admin')"></app-admin-navbar>
+
+<main>
+    <router-outlet></router-outlet>
+</main>
+
+<app-footer></app-footer>

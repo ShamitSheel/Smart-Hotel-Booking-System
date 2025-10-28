@@ -1,0 +1,70 @@
+<nav class="bg-gradient-to-r from-blue-600 to-purple-700 text-white p-4 shadow-2xl">
+  <div class="container mx-auto flex justify-between items-center">
+
+    <div class="flex items-center">
+      <a routerLink="/" class="flex items-center space-x-2 transform transition duration-300 hover:scale-105">
+        <i class="bi bi-buildings-fill text-white transition-colors duration-300" style="font-size: 1.9rem;"></i>
+        <span class="text-4xl font-extrabold text-white tracking-tight font-sans">Hotelify.com</span>
+      </a>
+    </div>
+
+    <div class="flex items-center space-x-8">
+      <div class="flex items-center space-x-1 font-semibold text-white mt-2">
+        <span class="fi fi-in mt-1.95" style="font-size: 1.5rem;"></span>
+        <span class="text-lg font-medium font-sans ms-2">INR</span>
+      </div>
+
+      <a routerLink="/"
+        class="flex items-center space-x-1 font-semibold text-white hover:text-blue-200 transition-all duration-300 group">
+        <i class="bi bi-house-heart text-white group-hover:text-blue-200 transition-colors duration-300"
+          style="font-size: 1.9rem;"></i>
+        <span
+          class="transition-transform duration-300 group-hover:scale-105 group-hover:underline text-lg font-medium font-sans">Home</span>
+      </a>
+
+      <ng-container *ngIf="!(authService.isLoggedIn$ | async); else loggedInButtons">
+        <div class="flex items-center space-x-4">
+          <button routerLink="/login" class="px-6 py-2 rounded bg-white text-blue-700 font-bold border-2 border-transparent
+                      hover:text-blue-800 hover:border-blue-800 transition-all duration-300 ease-in-out
+                      focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-300
+                      shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg font-sans me-2">
+            Login
+          </button>
+          <button routerLink="/register" class="px-6 py-2 rounded bg-blue-500 text-white font-bold border-2 border-blue-500
+                      hover:bg-blue-600 hover:border-blue-600 transition-all duration-300 ease-in-out
+                      focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-300
+                      shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg font-sans">
+            Register
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #loggedInButtons>
+        <div class="relative flex items-center space-x-2 cursor-pointer" (click)="toggleDropdown($event)">
+          <span class="text-white text-xl font-semibold font-sans">Hi, {{ (authService.currentUser$ | async)?.firstName
+            || 'User' }}</span>
+          <i class="bi bi-person-circle h-8 w-8 text-white transition-colors duration-300" style="font-size: 2rem;"></i>
+
+          <div
+            [ngClass]="{'opacity-100 visible translate-y-0': isDropdownOpen, 'opacity-0 invisible translate-y-2': !isDropdownOpen}"
+            class="absolute right-0 top-full mt-3 w-56 bg-white rounded-lg shadow-xl py-2
+              transition-all duration-300 ease-in-out z-20 overflow-hidden">
+
+            <a routerLink="/profile"
+              class="block px-5 py-3 text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 text-base font-sans">My
+              Profile</a>
+
+            <a routerLink="/bookings"
+              class="block px-5 py-3 text-gray-800 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 text-base font-sans">My
+              Bookings</a>
+
+            <button (click)="logout($event)"
+              class="w-full text-left px-5 py-3 text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-200 border-t border-gray-100 text-base font-sans">
+              Logout
+            </button>
+          </div>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</nav>

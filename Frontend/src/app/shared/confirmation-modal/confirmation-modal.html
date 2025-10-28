@@ -1,0 +1,28 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4>Confirm Deletion</h4>
+    </div>
+    <div class="modal-body">
+      <p>{{ promptText }}</p>
+      <p class="confirmation-message">
+        Please type "<span class="confirmation-word">{{ confirmationText }}</span>" to confirm.
+      </p>
+      <input 
+        type="text" 
+        [(ngModel)]="userInput" 
+        class="confirmation-input" 
+        [placeholder]="'Type ' + confirmationText"
+      >
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" (click)="onCancel()">Cancel</button>
+      <button 
+        class="btn-danger" 
+        [disabled]="!isInputCorrect" 
+        (click)="onConfirm()">
+        Confirm
+      </button>
+    </div>
+  </div>
+</div>

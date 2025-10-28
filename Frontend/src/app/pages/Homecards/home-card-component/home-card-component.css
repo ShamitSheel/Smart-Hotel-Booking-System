@@ -1,0 +1,211 @@
+.image-overlay-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 50%);
+  border-radius: 1rem;
+}
+
+
+.container h3 {
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  z-index: 1;
+  position: relative;
+}
+
+body>*:not(.blurred-background) {
+  position: relative;
+  z-index: 1;
+}
+
+.scroll-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scroll-container.grabbing {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  user-select: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.arrow-btn {
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.arrow-btn:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.card {
+  background-color: #fff;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.card.no-hover:hover {
+  transform: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.discover-card .card-title {
+  color: #fff;
+}
+
+.card-img-top {
+  height: 150px;
+  object-fit: cover;
+
+}
+
+.rating-box {
+  background-color: #28a745;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.rating-text {
+  font-weight: 500;
+  color: #000000;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.scroll-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1rem;
+  -webkit-overflow-scrolling: touch;
+  gap: 1rem !important;
+}
+
+.scroll-container .card-snap-item {
+  scroll-snap-align: start;
+  margin-right: 0.5rem;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Positioning for the arrow buttons */
+.arrow-btn {
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #333;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.arrow-btn:hover {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.arrow-btn:active {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+/* Container for the banner, aligned with the search form */
+.aligned-banner-container {
+    margin: 3rem auto;
+    max-width: 97%;
+    padding: 0;
+}
+
+/* Styles for the main card, now a compact banner */
+.offer-card-wide {
+    background: linear-gradient(135deg, #0077B6, #00b4d8);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: none; /* Ensure no transition effects on the card */
+}
+
+/* Explicitly remove any hover effects on the card */
+.offer-card-wide:hover {
+    transform: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.offer-card-wide .card-body {
+    padding: 1.5rem;
+}
+
+.offer-card-wide .offer-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.offer-card-wide .card-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+}
+
+.offer-card-wide .card-text {
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+
+/* Search button styling (from a previous block) */
+.btn-primary.rounded-pill {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: none; /* Removed hover effect */
+    padding: 0.75rem 2rem;
+}

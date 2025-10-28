@@ -1,0 +1,50 @@
+<form [formGroup]="featuresAmenitiesForm" (ngSubmit)="onSubmit()" class="form-container">
+  <h3>4. Features & Amenities</h3>
+  
+  <div class="form-section">
+    <h4><i class="bi bi-star-fill"></i> Features</h4>
+    <p>What are the key features of your hotel?</p>
+    
+    <div class="add-new-item">
+      <input type="text" [formControl]="newFeatureControl" placeholder="Add a new feature">
+      <button type="button" class="btn-icon-labeled" (click)="addNewFeature()" [disabled]="newFeatureControl.invalid">
+        <i class="bi bi-plus-circle-fill"></i> Add Feature
+      </button>
+    </div>
+    
+    <div class="checkbox-list" formArrayName="features">
+      <label *ngFor="let feature of availableFeatures; let i = index" class="checkbox-item">
+        <input type="checkbox" [formControlName]="i">
+        {{ feature }}
+      </label>
+    </div>
+  </div>
+  
+  <div class="form-section">
+    <h4><i class="bi bi-person-fill"></i> Amenities</h4>
+    <p>What amenities are available to guests?</p>
+    
+    <div class="add-new-item">
+      <input type="text" [formControl]="newAmenityControl" placeholder="Add a new amenity">
+      <button type="button" class="btn-icon-labeled" (click)="addNewAmenity()" [disabled]="newAmenityControl.invalid">
+        <i class="bi bi-plus-circle-fill"></i> Add Amenity
+      </button>
+    </div>
+    
+    <div class="checkbox-list" formArrayName="amenities">
+      <label *ngFor="let amenity of availableAmenities; let i = index" class="checkbox-item">
+        <input type="checkbox" [formControlName]="i">
+        {{ amenity }}
+      </label>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="button" class="btn-secondary" (click)="onGoBack()">
+      <i class="bi bi-arrow-left"></i> Back
+    </button>
+    <button type="submit" class="btn-primary">
+      Next <i class="bi bi-arrow-right"></i>
+    </button>
+  </div>
+</form>

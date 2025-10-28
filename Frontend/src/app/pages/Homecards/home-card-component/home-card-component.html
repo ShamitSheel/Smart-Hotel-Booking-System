@@ -1,0 +1,109 @@
+<div class="container-fluid">
+  <div class="container-fluid py-1 px-3">
+    <div class="card border-0 rounded-3 overflow-hidden shadow-sm" style="background-color: #e0f2f7;">
+      <div class="card-body p-3 text-center">
+        <h4 class="card-title fw-bold text-dark mb-1">Your Perfect Getaway Awaits</h4>
+        <p class="card-text text-muted small mb-0">Find exclusive deals on top-rated hotels and stays.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid px-4 mt-5 position-relative">
+    <h3 class="mb-3">Discover your new favourite stay</h3>
+    <button *ngIf="arrowVisibility.property.left" class="arrow-btn position-absolute top-50 start-0 translate-middle-y"
+      (click)="scrollProperty('left')">&#10094;</button>
+
+    <div #propertyScroll class="scroll-container d-flex gap-4" (scroll)="updatePropertyArrows()">
+      <div *ngFor="let property of propertyCards" class="card text-white flex-shrink-0 card-snap-item mt-3"
+        style="width: 15rem; height: 19rem; cursor: pointer;" (click)="navigateToPropertyType(property.type || '')">
+        <img [src]="property.image" class="card-img" alt="{{ property.title }}"
+          style="height: 100%; object-fit: cover; object-position: center;">
+        <div class="card-img-overlay d-flex flex-column justify-content-end image-overlay-gradient">
+          <h5 class="card-title">{{ property.title }}</h5>
+        </div>
+      </div>
+    </div>
+
+    <button *ngIf="arrowVisibility.property.right" class="arrow-btn position-absolute top-50 end-0 translate-middle-y"
+      (click)="scrollProperty('right')">&#10095;</button>
+  </div>
+
+  <div class="container-fluid px-4 mt-5 position-relative">
+    <h3 class="mb-3">Explore stays in popular destinations</h3>
+    <button *ngIf="arrowVisibility.popular.left" class="arrow-btn position-absolute top-50 start-0 translate-middle-y"
+      (click)="scrollPopular('left')">&#10094;</button>
+
+    <div #popularScroll class="scroll-container d-flex gap-4" (scroll)="updatePopularArrows()">
+      <div *ngFor="let popular of cards" class="card flex-shrink-0 card-snap-item mt-3"
+        style="width: 15rem; height: 13rem; cursor: pointer;" (click)="navigateToDestination(popular.title)">
+        <img [src]="popular.image" class="card-img-top" alt="{{ popular.title }}">
+        <div class="card-body">
+          <h5 class="card-title">{{ popular.title }}</h5>
+        </div>
+      </div>
+    </div>
+
+    <button *ngIf="arrowVisibility.popular.right" class="arrow-btn position-absolute top-50 end-0 translate-middle-y"
+      (click)="scrollPopular('right')">&#10095;</button>
+  </div>
+
+  <div class="container-fluid px-4 mt-5 position-relative">
+    <h3 class="mb-3">Explore these unique stays</h3>
+    <button *ngIf="arrowVisibility.homes.left" class="arrow-btn position-absolute top-50 start-0 translate-middle-y"
+      (click)="scrollHomes('left')">&#10094;</button>
+
+    <div #homesScroll class="scroll-container d-flex gap-4" (scroll)="updateHomesArrows()">
+      <div *ngFor="let home of homesCards" class="card flex-shrink-0 card-snap-item mt-3"
+        style="width: 18rem; height: auto; cursor: pointer;" (click)="navigateToHotelDetails(home.id)">
+        <img [src]="home.image" class="card-img-top" alt="{{ home.hotelName }}">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <div class="rating-box me-2">{{ home.rating }}</div>
+            <span class="rating-text">{{ getRatingText(home.rating) }}</span>
+          </div>
+          <h5 class="card-title mb-1">{{ home.hotelName }}</h5>
+          <p class="card-text text-muted mb-2">{{ home.city }}</p>
+          <div class="mt-auto">
+            <p class="mb-0">
+              <span class="text-muted text-decoration-line-through">₹{{ home.originalPrice | number }}</span>
+              <span class="fw-bold text-success ms-2">₹{{ home.offerPrice | number }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button *ngIf="arrowVisibility.homes.right" class="arrow-btn position-absolute top-50 end-0 translate-middle-y"
+      (click)="scrollHomes('right')">&#10095;</button>
+  </div>
+
+  <div class="container-fluid px-4 mt-5 position-relative">
+    <h3 class="mb-3">Top deals for a last minute getaway</h3>
+    <button *ngIf="arrowVisibility.deals.left" class="arrow-btn position-absolute top-50 start-0 translate-middle-y"
+      (click)="scrollDeals('left')">&#10094;</button>
+
+    <div #dealsScroll class="scroll-container d-flex gap-4" (scroll)="updateDealsArrows()">
+      <div *ngFor="let deal of dealsCards" class="card flex-shrink-0 card-snap-item mt-3"
+        style="width: 18rem; height: auto; cursor: pointer;" (click)="navigateToHotelDetails(deal.id)">
+        <img [src]="deal.image" class="card-img-top" alt="{{ deal.hotelName }}">
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-2">
+            <div class="rating-box me-2">{{ deal.rating }}</div>
+            <span class="rating-text">{{ getRatingText(deal.rating) }}</span>
+          </div>
+          <h5 class="card-title mb-1">{{ deal.hotelName }}</h5>
+          <p class="card-text text-muted mb-2">{{ deal.city }}</p>
+          <div class="mt-auto">
+            <p class="mb-0">
+              <span class="text-muted text-decoration-line-through">₹{{ deal.originalPrice | number }}</span>
+              <span class="fw-bold text-success ms-2">₹{{ deal.offerPrice | number }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button *ngIf="arrowVisibility.deals.right" class="arrow-btn position-absolute top-50 end-0 translate-middle-y"
+      (click)="scrollDeals('right')">&#10095;</button>
+  </div>
+</div>

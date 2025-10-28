@@ -1,0 +1,80 @@
+<form [formGroup]="locationContactForm" (ngSubmit)="onSubmit()" class="form-container">
+  <h3>2. Location & Contact</h3>
+
+  <div class="form-section" formGroupName="address">
+    <h4>Address Details</h4>
+    <div class="form-field">
+      <label for="street">Street</label>
+      <input id="street" type="text" formControlName="street">
+      <div *ngIf="locationContactForm.get('address.street')?.invalid && locationContactForm.get('address.street')?.touched" class="error-message">
+        Street is required.
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="area">Area (Optional)</label>
+      <input id="area" type="text" formControlName="area">
+    </div>
+    <div class="form-field">
+      <label for="landmark">Landmark (Optional)</label>
+      <input id="landmark" type="text" formControlName="landmark">
+    </div>
+    <div class="form-field">
+      <label for="city">City</label>
+      <input id="city" type="text" formControlName="city">
+      <div *ngIf="locationContactForm.get('address.city')?.invalid && locationContactForm.get('address.city')?.touched" class="error-message">
+        City is required.
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="state">State</label>
+      <input id="state" type="text" formControlName="state">
+      <div *ngIf="locationContactForm.get('address.state')?.invalid && locationContactForm.get('address.state')?.touched" class="error-message">
+        State is required.
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="country">Country</label>
+      <input id="country" type="text" formControlName="country">
+      <div *ngIf="locationContactForm.get('address.country')?.invalid && locationContactForm.get('address.country')?.touched" class="error-message">
+        Country is required.
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="zipCode">Zip Code</label>
+      <input id="zipCode" type="text" formControlName="zipCode">
+      <div *ngIf="locationContactForm.get('address.pincode')?.invalid && locationContactForm.get('address.pincode')?.touched" class="error-message">
+        A valid 6-digit pincode is required.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section" formGroupName="contact">
+    <h4>Contact Information</h4>
+    <div class="form-field">
+      <label for="phone">Phone Number</label>
+      <input id="phone" type="tel" formControlName="phone">
+      <div *ngIf="locationContactForm.get('contact.phone')?.invalid && locationContactForm.get('contact.phone')?.touched" class="error-message">
+        A valid 10-digit phone number is required.
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email">
+      <div *ngIf="locationContactForm.get('contact.email')?.invalid && locationContactForm.get('contact.email')?.touched" class="error-message">
+        A valid email is required.
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="website">Website (Optional)</label>
+      <input id="website" type="text" formControlName="website">
+      <div *ngIf="locationContactForm.get('contact.website')?.invalid && locationContactForm.get('contact.website')?.touched" class="error-message">
+        Please enter a valid URL.
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="button" class="btn-secondary" (click)="onGoBack()">Back</button>
+    <button type="submit" class="btn-primary" [disabled]="locationContactForm.invalid">Next</button>
+  </div>
+</form>

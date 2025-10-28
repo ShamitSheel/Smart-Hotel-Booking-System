@@ -1,0 +1,35 @@
+<div class="view-section">
+  <div class="header">
+    <h4><i class="bi bi-info-circle-fill"></i> Basic Information</h4>
+    <button type="button" class="btn-edit" (click)="onEdit()" *ngIf="!isEditing">Edit</button>
+  </div>
+  
+  <div class="content" *ngIf="!isEditing">
+    <p><strong>Hotel Name:</strong> {{ initialData.name }}</p>
+    <p><strong>Description:</strong> {{ initialData.description }}</p>
+    <p><strong>Hotel Type:</strong> {{ initialData.type }}</p>
+  </div>
+  
+  <div class="edit-form" *ngIf="isEditing">
+    <form [formGroup]="basicInfoForm" (ngSubmit)="onSave()">
+      <div class="form-group">
+        <label for="name">Hotel Name</label>
+        <input type="text" id="name" formControlName="name" />
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="type">Hotel Type</label>
+        <select id="type" formControlName="type">
+          <option *ngFor="let type of hotelTypes" [value]="type">{{ type }}</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn-save" [disabled]="basicInfoForm.invalid">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

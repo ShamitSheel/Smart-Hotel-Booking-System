@@ -1,0 +1,45 @@
+<div class="form-container">
+    <h3>6. Room Details</h3>
+
+    <div class="form-section">
+        <h4><i class="bi bi-door-open-fill"></i> Your Rooms</h4>
+        <p>Add and manage the different types of rooms available in your hotel.</p>
+
+        <div *ngIf="rooms.length === 0" class="empty-list">
+            <p>No rooms added yet. Click the button below to add your first room.</p>
+        </div>
+
+        <div *ngIf="rooms.length > 0" class="room-list">
+            <div *ngFor="let room of rooms" class="room-item">
+                <div class="room-details">
+                    <h5>{{ room.name }}</h5>
+                    <p>{{ room.description }}</p>
+                    <p class="room-price">
+                        <span class="original-price" *ngIf="room.discountedPrice < room.originalPrice">${{
+                            room.originalPrice }}</span>
+                        <span class="discounted-price">${{ room.discountedPrice }}</span>
+                    </p>
+                </div>
+                <div class="room-actions">
+                    <button type="button" class="btn-secondary" (click)="onEditRoom(room)">Edit</button>
+                    <button type="button" class="btn-danger" (click)="onDeleteRoom(room.id)">Delete</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="add-room-button">
+            <button type="button" class="btn-primary" (click)="onAddRoom()">
+                <i class="bi bi-plus-circle-fill"></i> Add a New Room
+            </button>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="button" class="btn-secondary" (click)="onGoBack()">
+            <i class="bi bi-arrow-left"></i> Back
+        </button>
+        <button type="submit" class="btn-primary" [disabled]="rooms.length === 0" (click)="onSubmit()">
+            Next <i class="bi bi-arrow-right"></i>
+        </button>
+    </div>
+</div>

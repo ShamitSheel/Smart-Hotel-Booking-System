@@ -1,0 +1,146 @@
+ul.list-group {
+    max-height: 200px;
+    overflow-y: auto;
+    cursor: pointer;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+/* Container for the search form with a background image */
+.my-background-div {
+    position: relative;
+    background-image: url('https://img.freepik.com/premium-vector/tropical-luxury-resort-hotel-beach-swimming-pool-poolside-seating-area-summer-vacation-concept_48369-46815.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    margin-top: 3rem;
+    min-height: 480px; /* Use min-height for responsiveness */
+    overflow: hidden; /* Ensures rounded corners apply to the overlay */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Semi-transparent overlay for better text contrast */
+.my-background-div::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+    z-index: 1;
+}
+
+/* Container for the search form with a background image */
+.my-background-div {
+    position: relative;
+    background-image: url('https://img.freepik.com/premium-vector/tropical-luxury-resort-hotel-beach-swimming-pool-poolside-seating-area-summer-vacation-concept_48369-46815.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px;
+    margin: 3rem auto; /* Creates space on the top, bottom, and centers it horizontally */
+    max-width: 95%; /* Ensures a few spaces on the left and right */
+    min-height: 480px; /* Use min-height for responsiveness */
+    overflow: hidden; /* Ensures rounded corners apply to the overlay */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Semi-transparent overlay for better text contrast */
+.my-background-div::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+    z-index: 1;
+}
+
+/* Styles for the inner search form container */
+.inner {
+    position: relative; /* Positioned above the overlay */
+    z-index: 2;
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Heading and paragraph styles for better readability on the overlay */
+.my-background-div h2,
+.my-background-div p {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+/* Custom color for icons */
+.text-blue-700 {
+    color: #1a56db;
+}
+
+/* Hover/Focus effect for form inputs */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    transition: all 0.2s ease-in-out;
+}
+
+/* Search button styling */
+.btn-primary.rounded-pill {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.2s ease-in-out;
+    padding: 0.75rem 2rem;
+}
+
+.btn-primary.rounded-pill:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+
+
+
+/* .inner .form-label {
+    font-weight: bold;
+    color: #333;
+    line-height: 1.5; 
+}
+
+
+.text-blue-700 {
+    color: #1a56db;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .inner .col-md-6 {
+        flex: 0 0 auto;
+        width: 50%;
+    }
+} */
+
+
+/* search-bar.css */
+
+/* ... other styles ... */
+
+.location-dropdown {
+  z-index: 1050;
+}
