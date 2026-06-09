@@ -21,7 +21,7 @@ Use a free MySQL host such as Aiven, Railway, or another provider that gives you
 Create four databases:
 
 - `userdb`
-- `hotelDb`
+- `hoteldb`
 - `bookingDb`
 - `reviewDb`
 
@@ -78,7 +78,7 @@ user-service:
 DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/userdb?sslMode=REQUIRED
 
 hotel-service:
-DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/hotelDb?sslMode=REQUIRED
+DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/hoteldb?sslMode=REQUIRED
 
 booking-service:
 DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/bookingDb?sslMode=REQUIRED
