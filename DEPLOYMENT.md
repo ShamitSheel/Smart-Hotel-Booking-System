@@ -30,9 +30,9 @@ Each backend service can use the same MySQL username/password, but each service 
 Example for Aiven MySQL:
 
 ```text
-DB_URL=jdbc:mysql://your-mysql-host:3306/userdb?sslMode=REQUIRED
-DB_USERNAME=your_mysql_user
-DB_PASSWORD=your_mysql_password
+DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/userdb?sslMode=REQUIRED
+DB_USERNAME=avnadmin
+DB_PASSWORD=your_Aiven_password
 ```
 
 ## 2. Deploy Backend Services On Render
@@ -67,16 +67,34 @@ Eureka is optional for the hosted version because the API Gateway can route dire
 Set these on `user-service`, `hotel-service`, `booking-service`, and `Ratings-And-Review-Service`:
 
 ```text
-DB_URL=jdbc:mysql://your-mysql-host:3306/the_service_database?sslMode=REQUIRED
-DB_USERNAME=your_mysql_user
-DB_PASSWORD=your_mysql_password
+DB_USERNAME=avnadmin
+DB_PASSWORD=your_Aiven_password
 ```
 
-For `user-service`, also set mail values if password reset/email features are needed:
+Use the matching `DB_URL` for each service:
+
+```text
+user-service:
+DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/userdb?sslMode=REQUIRED
+
+hotel-service:
+DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/hotelDb?sslMode=REQUIRED
+
+booking-service:
+DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/bookingDb?sslMode=REQUIRED
+
+Ratings-And-Review-Service:
+DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/reviewDb?sslMode=REQUIRED
+```
+
+Mail settings are optional. Leave them empty for the first deployment. If password reset/email features are needed later, set:
 
 ```text
 MAIL_USERNAME=your_email@gmail.com
 MAIL_PASSWORD=your_new_gmail_app_password
+MAIL_HOST=smtp.gmail.com
+MAIL_SMTP_AUTH=true
+MAIL_SMTP_STARTTLS=true
 ```
 
 ### Env Vars For API Gateway
@@ -91,6 +109,8 @@ RATINGS_SERVICE_URL=https://your-ratings-service.onrender.com
 ```
 
 Then deploy/redeploy `api-gateway`.
+
+Eureka clients are disabled by default in hosted services. If you deploy and use Eureka later, set `EUREKA_CLIENT_ENABLED=true` and `EUREKA_SERVER_URL=https://your-eureka-service.onrender.com/eureka/`.
 
 ## 3. Update Frontend API URL
 
