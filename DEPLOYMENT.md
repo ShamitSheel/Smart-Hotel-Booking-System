@@ -50,6 +50,8 @@ For every service:
 
 Do not set Java build/start commands for Docker services. The Dockerfile builds the Spring Boot jar and starts it.
 
+The backend Dockerfiles use Java 21. Keep the services on Docker runtime so Render uses the Java version from the Dockerfile.
+
 Deploy in this order:
 
 1. `Backend/user-service`
