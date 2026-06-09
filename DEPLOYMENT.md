@@ -27,28 +27,28 @@ Create four databases:
 
 Each backend service can use the same MySQL username/password, but each service should point to its own database in `DB_URL`.
 
-Example:
+Example for Aiven MySQL:
 
 ```text
-DB_URL=jdbc:mysql://your-mysql-host:3306/userdb?useSSL=true&requireSSL=true
+DB_URL=jdbc:mysql://your-mysql-host:3306/userdb?sslMode=REQUIRED
 DB_USERNAME=your_mysql_user
 DB_PASSWORD=your_mysql_password
 ```
 
 ## 2. Deploy Backend Services On Render
 
-Create one Render Web Service for each backend folder.
+Create one Render Web Service for each backend folder. Use Docker deployment.
 
 For every service:
 
 - Connect GitHub repo: `ShamitSheel/Smart-Hotel-Booking-System`
 - Branch: `master`
 - Root directory: service folder, for example `Backend/user-service`
-- Build command: `./mvnw clean package -DskipTests`
-- Start command: `java -jar target/*.jar`
-- Environment variable: `JAVA_VERSION=17`
+- Runtime: `Docker`
+- Dockerfile path: `Dockerfile`
+- Docker build context directory: `.`
 
-If Render has trouble with `./mvnw`, use `mvn clean package -DskipTests`.
+Do not set Java build/start commands for Docker services. The Dockerfile builds the Spring Boot jar and starts it.
 
 Deploy in this order:
 
@@ -65,7 +65,7 @@ Eureka is optional for the hosted version because the API Gateway can route dire
 Set these on `user-service`, `hotel-service`, `booking-service`, and `Ratings-And-Review-Service`:
 
 ```text
-DB_URL=jdbc:mysql://your-mysql-host:3306/the_service_database?useSSL=true&requireSSL=true
+DB_URL=jdbc:mysql://your-mysql-host:3306/the_service_database?sslMode=REQUIRED
 DB_USERNAME=your_mysql_user
 DB_PASSWORD=your_mysql_password
 ```
