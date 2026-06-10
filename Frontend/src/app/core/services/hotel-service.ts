@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class HotelService {
   // Use the API Gateway base URL for the hotel microservice
-  private apiUrl = 'http://localhost:8000/api/hotels';
+  private apiUrl = 'https://hotelify-api-gateway.onrender.com/api/hotels';
 
   private http = inject(HttpClient);
 

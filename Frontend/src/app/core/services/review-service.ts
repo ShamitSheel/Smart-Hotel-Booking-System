@@ -7,7 +7,7 @@ import { Review, AverageRatingResponse, ReviewRequest } from '../models/review.m
   providedIn: 'root',
 })
 export class ReviewService {
-  private reviewsUrl = 'http://localhost:8000/api/reviews';
+  private reviewsUrl = 'https://hotelify-api-gateway.onrender.com/api/reviews';
  
   constructor(private http: HttpClient) {}
  

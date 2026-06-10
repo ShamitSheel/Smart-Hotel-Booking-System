@@ -68,7 +68,7 @@ export class BookingForm implements OnInit {
       this.hotelId = params.get('hotelId') as string;
 
       if (roomId && this.hotelId) {
-        const hotelUrl = `http://localhost:8000/api/hotels/${this.hotelId}`;
+        const hotelUrl = `https://hotelify-api-gateway.onrender.com/api/hotels/${this.hotelId}`;
 
         this.http.get<any>(hotelUrl).subscribe(
           (hotelData) => {

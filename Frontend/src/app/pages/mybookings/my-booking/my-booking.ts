@@ -71,7 +71,7 @@ export class MyBooking implements OnInit {
         }
 
         const enrichedBookingsObservables = bookings.map(booking => {
-          const hotelUrl = `http://localhost:8000/api/hotels/${booking.hotelId}`;
+          const hotelUrl = `https://hotelify-api-gateway.onrender.com/api/hotels/${booking.hotelId}`;
 
           return forkJoin([
             this.http.get<Hotel>(hotelUrl).pipe(

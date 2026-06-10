@@ -8,7 +8,7 @@ import { User } from '../models/user.models'; // Assuming you have a user model
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/users';
+  private apiUrl = 'https://hotelify-api-gateway.onrender.com/api/users';
 
   constructor(private http: HttpClient) { }
 

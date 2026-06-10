@@ -10,7 +10,7 @@ import { DiscoverCards, PopularCards, TopDealCards, UniqueCards } from '../model
 })
 export class HomeCardService {
   
-  private apiUrl = 'http://localhost:8000/api/hotels';
+  private apiUrl = 'https://hotelify-api-gateway.onrender.com/api/hotels';
 
   constructor(private http: HttpClient) {}
 

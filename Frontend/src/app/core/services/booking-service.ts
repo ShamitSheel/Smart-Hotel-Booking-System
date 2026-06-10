@@ -8,8 +8,8 @@ import { Booking, EnhancedBooking, DashboardData } from '../models/booking.model
   providedIn: 'root',
 })
 export class BookingService {
-  private apiUrl = 'http://localhost:8000/api/bookings';
-  private couponUrl = 'http://localhost:8000/api/coupons';
+  private apiUrl = 'https://hotelify-api-gateway.onrender.com/api/bookings';
+  private couponUrl = 'https://hotelify-api-gateway.onrender.com/api/coupons';
  
   constructor(private http: HttpClient) {}
  

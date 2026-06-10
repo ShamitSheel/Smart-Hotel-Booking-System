@@ -51,7 +51,7 @@ export interface Hotel {
   providedIn: 'root'
 })
 export class LocationService {
-  private apiUrl = 'http://localhost:3000/hotels';
+  private apiUrl = 'https://hotelify-api-gateway.onrender.com/api/hotels';
 
   constructor(private http: HttpClient) {}
 

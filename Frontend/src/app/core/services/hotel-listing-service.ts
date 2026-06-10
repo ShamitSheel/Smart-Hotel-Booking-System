@@ -8,7 +8,7 @@ import { Hotel } from '../models/hotel.model';
   providedIn: 'root'
 })
 export class HotelListingService {
-  private apiUrl = 'http://localhost:8000/api/hotels';
+  private apiUrl = 'https://hotelify-api-gateway.onrender.com/api/hotels';
 
   // WARNING: EXTREME SECURITY RISK. DO NOT USE IN PRODUCTION.
   // This token should NEVER be hardcoded in the frontend.
