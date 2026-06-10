@@ -106,6 +106,7 @@ USER_SERVICE_URL=https://your-user-service.onrender.com
 HOTEL_SERVICE_URL=https://your-hotel-service.onrender.com
 BOOKING_SERVICE_URL=https://your-booking-service.onrender.com
 RATINGS_SERVICE_URL=https://your-ratings-service.onrender.com
+CORS_ALLOWED_ORIGINS=https://smart-hotel-booking-system.vercel.app,http://localhost:4200
 ```
 
 Then deploy/redeploy `api-gateway`.

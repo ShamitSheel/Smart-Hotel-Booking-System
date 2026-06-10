@@ -1,5 +1,6 @@
 package com.cts.api_gateway;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -7,9 +8,13 @@ import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 public class WebConfig {
+
+    @Value("${cors.allowed-origins:http://localhost:4200}")
+    private String allowedOrigins;
 
     /**
      * Configures global CORS settings for the API Gateway.
@@ -21,10 +26,15 @@ public class WebConfig {
     public CorsWebFilter corsWebFilter() {
 
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        List<String> origins = Arrays.stream(allowedOrigins.split(","))
+                .map(String::trim)
+                .filter(origin -> !origin.isEmpty())
+                .toList();
+        corsConfig.setAllowedOrigins(origins);
         corsConfig.setMaxAge(3600L); // 1 hour
         corsConfig.addAllowedMethod("*"); // Allow all methods
         corsConfig.addAllowedHeader("*"); // Allow all headers
+        corsConfig.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig); // Apply to all paths
