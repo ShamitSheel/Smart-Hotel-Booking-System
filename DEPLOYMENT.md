@@ -23,7 +23,7 @@ Create four databases:
 - `userdb`
 - `hoteldb`
 - `bookingdb`
-- `reviewDb`
+- `reviewdb`
 
 Each backend service can use the same MySQL username/password, but each service should point to its own database in `DB_URL`.
 
@@ -84,7 +84,7 @@ booking-service:
 DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/bookingdb?sslMode=REQUIRED
 
 Ratings-And-Review-Service:
-DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/reviewDb?sslMode=REQUIRED
+DB_URL=jdbc:mysql://hotelify-shamitsheel.e.aivencloud.com:18965/reviewdb?sslMode=REQUIRED
 ```
 
 Mail settings are optional. Leave them empty for the first deployment. If password reset/email features are needed later, set:
