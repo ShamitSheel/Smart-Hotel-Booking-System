@@ -13,7 +13,7 @@ import java.util.List;
 @Configuration
 public class WebConfig {
 
-    @Value("${cors.allowed-origins:http://localhost:4200}")
+    @Value("${cors.allowed-origins:https://smart-hotel-booking-system.vercel.app,http://localhost:4200}")
     private String allowedOrigins;
 
     /**
@@ -30,7 +30,7 @@ public class WebConfig {
                 .map(String::trim)
                 .filter(origin -> !origin.isEmpty())
                 .toList();
-        corsConfig.setAllowedOrigins(origins);
+        corsConfig.setAllowedOriginPatterns(origins);
         corsConfig.setMaxAge(3600L); // 1 hour
         corsConfig.addAllowedMethod("*"); // Allow all methods
         corsConfig.addAllowedHeader("*"); // Allow all headers

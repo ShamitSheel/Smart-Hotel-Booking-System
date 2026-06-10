@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.http.HttpMethod;
@@ -13,6 +14,9 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class GatewayApiAuthenticationFilter implements GatewayFilter {
@@ -24,6 +28,9 @@ public class GatewayApiAuthenticationFilter implements GatewayFilter {
 
     @Autowired
     private RouterValidator routerValidator;
+
+    @Value("${cors.allowed-origins:https://smart-hotel-booking-system.vercel.app,http://localhost:4200}")
+    private String allowedOrigins;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -100,7 +107,46 @@ public class GatewayApiAuthenticationFilter implements GatewayFilter {
 
     private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
         ServerHttpResponse response = exchange.getResponse();
+        addCorsHeaders(exchange.getRequest(), response);
         response.setStatusCode(httpStatus);
         return response.setComplete();
+    }
+
+    private void addCorsHeaders(ServerHttpRequest request, ServerHttpResponse response) {
+        String origin = request.getHeaders().getOrigin();
+        if (origin == null || !isAllowedOrigin(origin)) {
+            return;
+        }
+
+        response.getHeaders().setAccessControlAllowOrigin(origin);
+        response.getHeaders().setAccessControlAllowCredentials(true);
+        response.getHeaders().setAccessControlAllowMethods(List.of(
+                HttpMethod.GET,
+                HttpMethod.POST,
+                HttpMethod.PUT,
+                HttpMethod.PATCH,
+                HttpMethod.DELETE,
+                HttpMethod.OPTIONS
+        ));
+        response.getHeaders().setAccessControlAllowHeaders(List.of("*"));
+        response.getHeaders().setAccessControlMaxAge(3600L);
+    }
+
+    private boolean isAllowedOrigin(String origin) {
+        return Arrays.stream(allowedOrigins.split(","))
+                .map(String::trim)
+                .filter(allowedOrigin -> !allowedOrigin.isEmpty())
+                .anyMatch(allowedOrigin -> allowedOrigin.equals(origin) || matchesWildcardOrigin(allowedOrigin, origin));
+    }
+
+    private boolean matchesWildcardOrigin(String allowedOrigin, String origin) {
+        if (!allowedOrigin.contains("*")) {
+            return false;
+        }
+
+        String regex = allowedOrigin
+                .replace(".", "\\.")
+                .replace("*", ".*");
+        return origin.matches(regex);
     }
 }
